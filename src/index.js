@@ -10,6 +10,8 @@ const path = require('path');
 const app = express();
 const config = require('./infrastructure/config');
 
+const homeScreen = require('./app/home');
+
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(morgan('combined', { stream: fs.createWriteStream('./access.log', { flags: 'a' }) }));
 app.use(morgan('dev'));
@@ -17,6 +19,7 @@ app.set('view engine', 'ejs');
 app.set('views', path.resolve(__dirname, 'app'));
 app.use(expressLayouts);
 app.set('layout', 'layouts/layout');
+app.use('/', homeScreen());
 
 if (config.hostingEnvironment.env === 'dev') {
   app.proxy = true;

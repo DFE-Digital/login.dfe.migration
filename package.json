@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "settings='./config/PROJECT-NAME.dev.json' node src/index.js",
+    "dev": "settings='./config/login.dfe.migration.dev.json' node src/index.js",
     "test": "./node_modules/.bin/jest"
   },
   "engines": {
