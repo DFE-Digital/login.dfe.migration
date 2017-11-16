@@ -66,7 +66,7 @@ describe('When using the user invitation service', () => {
     expect(actual.lastName).toBe('One');
   });
 
-  it('then it should return null when api not found', async () => {
+  it('then it should return null when the invitations is not found', async () => {
     rp.mockImplementation(() => {
       const error = new Error('Not found');
       error.statusCode = 404;
