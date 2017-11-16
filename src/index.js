@@ -11,6 +11,7 @@ const app = express();
 const config = require('./infrastructure/config');
 
 const homeScreen = require('./app/home');
+const userDetails = require('./app/userDetails');
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(morgan('combined', { stream: fs.createWriteStream('./access.log', { flags: 'a' }) }));
@@ -19,7 +20,9 @@ app.set('view engine', 'ejs');
 app.set('views', path.resolve(__dirname, 'app'));
 app.use(expressLayouts);
 app.set('layout', 'layouts/layout');
+
 app.use('/', homeScreen());
+app.use('/my-details', userDetails());
 
 if (config.hostingEnvironment.env === 'dev') {
   app.proxy = true;
@@ -37,6 +40,6 @@ if (config.hostingEnvironment.env === 'dev') {
   });
 } else {
   app.listen(process.env.PORT, () => {
-    logger.info(`Server listening on http://${config.hostingEnvironment.host}:${config.hostingEnvironment.port}`);
+    logger.info(`Server listening on http://${config.hostingEnvironment.host}:${process.env.PORT}`);
   });
 }
