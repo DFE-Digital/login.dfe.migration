@@ -14,6 +14,35 @@
       "audit": "magenta"
     }
   },
+  "directories": {
+    "type": "static",
+    "directoryId": "ADD_DIRECTORY_ID",
+    "service": {
+      "url": "ADD_DIRECTORIES_URL",
+      "auth": {
+        "type": "aad",
+        "tenant": "ADD_AAD_TENANT",
+        "authorityHostUrl": "ADD_AAD_URL",
+        "clientId": "ADD_AAD_CLIENT_ID",
+        "clientSecret": "ADD_AAD_CLIENT_SECRET",
+        "resource": "ADD_AAD_RESOURCE"
+      }
+    }
+  },
+  "organisations": {
+    "type":"Static",
+    "service": {
+      "url": "ADD_ORGANISATIONS_URL",
+      "auth": {
+        "type": "aad",
+        "tenant": "ADD_AAD_TENANT",
+        "authorityHostUrl": "ADD_AAD_URL",
+        "clientId": "ADD_AAD_CLIENT_ID",
+        "clientSecret": "ADD_AAD_CLIENT_SECRET",
+        "resource": "ADD_AAD_RESOURCE"
+      }
+    }
+  },
   "hostingEnvironment": {
     "showDevViews": "true",
     "env": "dev",

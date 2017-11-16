@@ -1,18 +1,22 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const expressLayouts = require('express-ejs-layouts');
 const morgan = require('morgan');
 const logger = require('./infrastructure/logger');
 const https = require('https');
 const fs = require('fs');
+const csurf = require('csurf');
 const path = require('path');
-
+const flash = require('express-flash-2');
 const app = express();
 const config = require('./infrastructure/config');
+const csrf = csurf({ cookie: true });
 
 const homeScreen = require('./app/home');
 const userDetails = require('./app/userDetails');
+const newPassword = require('./app/newPassword');
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(morgan('combined', { stream: fs.createWriteStream('./access.log', { flags: 'a' }) }));
@@ -20,22 +24,27 @@ app.use(morgan('dev'));
 app.set('view engine', 'ejs');
 app.set('views', path.resolve(__dirname, 'app'));
 app.use(expressLayouts);
+
 app.set('layout', 'layouts/layout');
+
 app.use(session({
   resave: true,
   saveUninitialized: true,
   secret: config.hostingEnvironment.sessionSecret
 }));
 
+
+app.use(cookieParser());
+app.use(flash());
 app.use('/', homeScreen());
 app.use('/my-details', userDetails());
-
+app.use('/new-password', newPassword(csrf));
 if (config.hostingEnvironment.env === 'dev') {
   app.proxy = true;
 
   app.get('/quick-login', (req, res) => {
     req.session.invitation = {
-      id: '693cca26-7200-4168-a93d-6e68311fd297',
+      id: '11e891fa-c176-4078-8a98-788d50912e55',
       firstName: 'Wade',
       lastName: 'Wilson',
       email: 'wwilson@x-force.test'
