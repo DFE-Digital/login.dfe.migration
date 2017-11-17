@@ -44,6 +44,7 @@
     }
   },
   "hostingEnvironment": {
+    "portalUrl": "https://login-dfe-portal.herokuapp.com",
     "showDevViews": "true",
     "env": "dev",
     "host": "localhost",

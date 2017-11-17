@@ -51,7 +51,7 @@ const handler = async (req, res) => {
   const user = await migrateInvitationToUser(invitationId, newPassword);
   req.session.invitation = {};
   req.session.user = {
-    id: user.id,
+    id: user.sub,
     email: user.email
   };
   // redirect to the complete page

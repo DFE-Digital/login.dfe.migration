@@ -17,6 +17,7 @@ const csrf = csurf({ cookie: true });
 const homeScreen = require('./app/home');
 const userDetails = require('./app/userDetails');
 const newPassword = require('./app/newPassword');
+const complete = require('./app/complete');
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(morgan('combined', { stream: fs.createWriteStream('./access.log', { flags: 'a' }) }));
@@ -39,6 +40,7 @@ app.use(flash());
 app.use('/', homeScreen());
 app.use('/my-details', userDetails());
 app.use('/new-password', newPassword(csrf));
+app.use('/complete', complete());
 if (config.hostingEnvironment.env === 'dev') {
   app.proxy = true;
 
