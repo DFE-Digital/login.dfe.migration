@@ -4,14 +4,15 @@ const express = require('express');
 const uuid = require('uuid/v4');
 const {isLoggedIn} = require('../../infrastructure/utils');
 const logger = require('../../infrastructure/logger');
-
+const listEndpoints = require('express-list-endpoints')
 
 const router = express.Router({ mergeParams: true });
 
-const devLauncher = (csrf, routes) => {
+const devLauncher = (csrf) => {
   logger.info('Mounting dev routes');
 
-  router.get('/', isLoggedIn, (req, res) => {
+  router.get('/', (req, res) => {
+    const routes = listEndpoints(req.app);
     res.render('devLauncher/views/launchpad', {
       title: 'Dev launcher',
       uuid: uuid(),

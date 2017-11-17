@@ -1,19 +1,25 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const expressLayouts = require('express-ejs-layouts');
 const morgan = require('morgan');
 const logger = require('./infrastructure/logger');
 const https = require('https');
 const fs = require('fs');
-const path = require('path');
-const setupAppRoutes = require('./app/routes');
-const cookieParser = require('cookie-parser');
 const csurf = require('csurf');
+const path = require('path');
+const flash = require('express-flash-2');
 
-const csrf = csurf({ cookie: true });
+const setupAppRoutes = require('./app/routes');
+
+
 const app = express();
 const config = require('./infrastructure/config');
+const csrf = csurf({ cookie: true });
+
+
+
 
 
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -23,21 +29,31 @@ app.use(morgan('dev'));
 app.set('view engine', 'ejs');
 app.set('views', path.resolve(__dirname, 'app'));
 app.use(expressLayouts);
+
 app.set('layout', 'layouts/layout');
+
 app.use(session({
   resave: true,
   saveUninitialized: true,
   secret: config.hostingEnvironment.sessionSecret
 }));
 
+
+app.use(cookieParser());
+app.use(flash());
+
+
 setupAppRoutes(app, csrf);
+
 
 if (config.hostingEnvironment.env === 'dev') {
   app.proxy = true;
 
   app.get('/quick-login', (req, res) => {
     req.session.invitation = {
+
       id: '8226a3d1-823a-4e52-83b3-6e6a117cef0f',
+
       firstName: 'Wade',
       lastName: 'Wilson',
       email: 'wwilson@x-force.test'
