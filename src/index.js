@@ -7,14 +7,17 @@ const logger = require('./infrastructure/logger');
 const https = require('https');
 const fs = require('fs');
 const path = require('path');
+const setupAppRoutes = require('./app/routes');
+const cookieParser = require('cookie-parser');
+const csurf = require('csurf');
 
+const csrf = csurf({ cookie: true });
 const app = express();
 const config = require('./infrastructure/config');
 
-const homeScreen = require('./app/home');
-const userDetails = require('./app/userDetails');
 
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cookieParser());
 app.use(morgan('combined', { stream: fs.createWriteStream('./access.log', { flags: 'a' }) }));
 app.use(morgan('dev'));
 app.set('view engine', 'ejs');
@@ -27,8 +30,7 @@ app.use(session({
   secret: config.hostingEnvironment.sessionSecret
 }));
 
-app.use('/', homeScreen());
-app.use('/my-details', userDetails());
+setupAppRoutes(app, csrf);
 
 if (config.hostingEnvironment.env === 'dev') {
   app.proxy = true;

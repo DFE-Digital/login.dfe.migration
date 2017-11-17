@@ -1,0 +1,45 @@
+
+<a href="step1" class="link-back">Back</a>
+
+<% if (locals.validationFailed && !locals.validationMessages.username && !locals.validationMessages.password) { %>
+<div class="notification notification-error" tabindex="-1">
+    <h1 class="bold-medium">Invalid credentials</h1>
+    <p>Your Secure Access sign-in details were not recognised</p>
+</div>
+<% } %>
+
+<div class="grid-row">
+    <div class="col-8">
+        <h1 class="heading-xlarge">
+            Enter your Secure Access sign-in details
+        </h1>
+        <p class="lede">This will help us transfer your permissions from Secure Access to DfE Sign-in service.</p>
+    </div>
+</div>
+<div class="grid-row">
+    <div class="col-12">
+        <form method="post">
+            <input type="hidden" name="_csrf" value="<%=csrfToken%>" />
+            <div class="form-group <%= locals.validationMessages.username ? 'form-group-error' : '' %>">
+                <label class="form-label" for="username">Secure access username</label>
+                <% if (locals.validationMessages.username) { %>
+                <p class="error-message" id="validation-username"><%=locals.validationMessages.username%></p>
+                <% } %>
+                <input class="form-control" type="text" name="username" id="username" required="required" value="<%=locals.username%>"
+                        <% if (locals.validationMessages.username) { %> aria-invalid="true" aria-describedby="validation-username" <% } %>>
+            </div>
+            <div class="form-group <%= locals.validationMessages.password ? 'form-group-error' : '' %>">
+                <label class="form-label" for="password">Secure access password</label>
+                <% if (locals.validationMessages.password) { %>
+                <p class="error-message" id="validation-password"><%=locals.validationMessages.password%></p>
+                <% } %>
+                <div class="show-password">
+                    <input class="form-control" id="password" name="password" type="password" required="required"
+                            <% if (locals.validationMessages.password) { %> aria-invalid="true" aria-describedby="validation-password" <% } %>>
+                </div>
+            </div>
+            <input type="hidden" name="id" id="invitationId" value="<%=locals.id%>">
+            <input type="submit" class="button" value="Continue">
+        </form>
+    </div>
+</div>
