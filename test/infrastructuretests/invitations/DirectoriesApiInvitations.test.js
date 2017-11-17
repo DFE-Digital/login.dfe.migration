@@ -3,7 +3,7 @@
 jest.mock('request-promise');
 jest.mock('login.dfe.jwt-strategies');
 jest.mock('./../../../src/infrastructure/config', () => {
-  return () => {
+
     return {
       directories: {
         directoryId: 'directory1',
@@ -12,7 +12,7 @@ jest.mock('./../../../src/infrastructure/config', () => {
         }
       },
     };
-  };
+
 });
 
 describe('When using the user invitation service', () => {
