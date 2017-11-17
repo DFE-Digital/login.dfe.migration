@@ -45,6 +45,14 @@ class InvitationsApiAccount extends Invitation {
     return response.result;
   }
 
+  static async validateOsaCredentials(id, userName,password) {
+
+    const invitation = await this.getById(id);
+
+
+
+  }
+
 }
 
 module.exports = InvitationsApiAccount;
