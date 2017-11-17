@@ -1,10 +1,10 @@
 'use strict';
 
-// const invitations = require('./../../infrastructure/Invitations/DirectoriesApiInvitations');
+const invitations = require('./../../infrastructure/Invitations/DirectoriesApiInvitations');
 
 const legacyAuth = async (req, res) => {
 
-  // const invitation = await invitations.getById(req.params.id);
+  const invitation = await invitations.getById(req.params.id);
 
 
   res.render('legacyAuth/views/legacyAuth', {

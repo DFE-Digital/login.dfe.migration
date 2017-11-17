@@ -8,7 +8,7 @@ const router = express.Router({ mergeParams: true });
 const home = (csrf) => {
   logger.info('Mounting legacy auth routes');
 
-  router.get('/:id', legacyAuth);
+  router.get('/:id',csrf, legacyAuth);
 
   return router;
 };

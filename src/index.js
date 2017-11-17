@@ -7,6 +7,7 @@ const https = require('https');
 const fs = require('fs');
 const path = require('path');
 const setupAppRoutes = require('./app/routes');
+const cookieParser = require('cookie-parser');
 const csurf = require('csurf');
 
 const csrf = csurf({ cookie: true });
@@ -15,6 +16,7 @@ const config = require('./infrastructure/config');
 
 
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cookieParser());
 app.use(morgan('combined', { stream: fs.createWriteStream('./access.log', { flags: 'a' }) }));
 app.use(morgan('dev'));
 app.set('view engine', 'ejs');
