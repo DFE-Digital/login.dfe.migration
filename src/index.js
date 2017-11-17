@@ -35,7 +35,7 @@ if (config.hostingEnvironment.env === 'dev') {
 
   app.get('/quick-login', (req, res) => {
     req.session.invitation = {
-      id: '693cca26-7200-4168-a93d-6e68311fd297',
+      id: '8226a3d1-823a-4e52-83b3-6e6a117cef0f',
       firstName: 'Wade',
       lastName: 'Wilson',
       email: 'wwilson@x-force.test'
