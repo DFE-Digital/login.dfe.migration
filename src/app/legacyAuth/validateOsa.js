@@ -34,6 +34,7 @@ const validateOsa = async (req, res) => {
       title: 'Sign in to Secure Access',
       csrfToken: req.csrfToken(),
       id: req.params.id,
+      username: req.body.username,
       validationFailed: true,
       validationMessages: formValidationResult.messages,
     });
@@ -55,6 +56,7 @@ const validateOsa = async (req, res) => {
       title: 'Sign in to Secure Access',
       csrfToken: req.csrfToken(),
       id: req.params.id,
+      username: req.body.username,
       validationFailed: true,
       validationMessages: {
         username: '',
