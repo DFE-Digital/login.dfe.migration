@@ -1,7 +1,7 @@
 const Invitation = require('./Invitation');
 const rp = require('request-promise');
 const jwtStrategy = require('login.dfe.jwt-strategies');
-const config = require('./../config')();
+const config = require('./../config');
 
 const callDirectoriesApi = async (resource, body, method = 'POST') => {
   const token = await jwtStrategy(config.directories.service).getBearerToken();
