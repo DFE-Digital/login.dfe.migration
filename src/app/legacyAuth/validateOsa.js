@@ -49,12 +49,17 @@ const validateOsa = async (req, res) => {
       lastName: invitationResult.lastName,
       email: invitationResult.email
     };
-    res.redirect('../my-details')
+    res.redirect('../my-details');
   }else{
     res.render('legacyAuth/views/legacyAuth', {
       title: 'Sign in to Secure Access',
       csrfToken: req.csrfToken(),
-      id: req.params.id
+      id: req.params.id,
+      validationFailed: true,
+      validationMessages: {
+        username: '',
+        password: '',
+      }
     });
   }
 
