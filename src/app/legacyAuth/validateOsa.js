@@ -13,8 +13,7 @@ const validateOsa = async (req, res) => {
       lastName: invitationResult.lastName,
       email: invitationResult.email
     };
-    //todo go to details page
-
+    res.redirect('../my-details')
   }else{
     res.render('legacyAuth/views/legacyAuth', {
       title: 'Sign in to Secure Access',

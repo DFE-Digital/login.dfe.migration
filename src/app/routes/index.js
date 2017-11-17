@@ -8,9 +8,9 @@ const userDetails = require('./../userDetails');
 const config = require('./../../infrastructure/config');
 
 const routes = (app, csrf) => {
-  app.use('/', migrationHome(csrf));
   app.use('/osa-auth', legacyAuth(csrf));
   app.use('/my-details', userDetails());
+  app.use('/', migrationHome(csrf));
   if(config.hostingEnvironment.showDevViews === 'true') app.use('/dev',devRoutes(csrf, listEndpoints(app)));
 };
 
