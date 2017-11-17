@@ -6,11 +6,6 @@ const isLoggedIn = (req, res, next) => {
     return next();
   }
   return res.status(302).redirect('/');
-  // if(req.isAuthenticated()) {
-  //   return next();
-  // }
-  // req.session.redirectUrl = req.originalUrl;
-  // return res.status(302).redirect(`/auth`);
 };
 
 const getUserEmail = (user) => {

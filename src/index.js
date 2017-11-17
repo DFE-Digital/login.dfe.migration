@@ -10,16 +10,23 @@ const fs = require('fs');
 const csurf = require('csurf');
 const path = require('path');
 const flash = require('express-flash-2');
+
+const setupAppRoutes = require('./app/routes');
+
+
 const app = express();
 const config = require('./infrastructure/config');
 const csrf = csurf({ cookie: true });
+
 
 const homeScreen = require('./app/home');
 const userDetails = require('./app/userDetails');
 const newPassword = require('./app/newPassword');
 const complete = require('./app/complete');
 
+
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cookieParser());
 app.use(morgan('combined', { stream: fs.createWriteStream('./access.log', { flags: 'a' }) }));
 app.use(morgan('dev'));
 app.set('view engine', 'ejs');
@@ -41,12 +48,18 @@ app.use('/', homeScreen());
 app.use('/my-details', userDetails());
 app.use('/new-password', newPassword(csrf));
 app.use('/complete', complete());
+
+setupAppRoutes(app, csrf);
+
+
 if (config.hostingEnvironment.env === 'dev') {
   app.proxy = true;
 
   app.get('/quick-login', (req, res) => {
     req.session.invitation = {
-      id: '11e891fa-c176-4078-8a98-788d50912e55',
+
+      id: '8226a3d1-823a-4e52-83b3-6e6a117cef0f',
+
       firstName: 'Wade',
       lastName: 'Wilson',
       email: 'wwilson@x-force.test'
