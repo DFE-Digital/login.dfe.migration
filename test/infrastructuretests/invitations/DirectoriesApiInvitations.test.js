@@ -111,7 +111,7 @@ describe('When using the user invitation service', () => {
       expect(rp.mock.calls[0][0].method).toBe('GET');
       expect(rp.mock.calls[0][0].uri).toBe(`http://unit.test.local/invitations/${invitationId}`);
     });
-    it('then if the record is not found false is returned', async () => {
+    it('then if the record is not found null is returned', async () => {
       rp.mockImplementation(() => {
         const error = new Error('Not found');
         error.statusCode = 404;
@@ -120,9 +120,9 @@ describe('When using the user invitation service', () => {
 
       const actual = await Directories.validateOsaCredentials(id, username, password);
 
-      expect(actual).toBe(false);
+      expect(actual).toBeNull();
     });
-    it('then if the username is not part of the response then false is returned', async () => {
+    it('then if the username is not part of the response then null is returned', async () => {
 
       rp.mockReturnValue(
         {
@@ -136,9 +136,9 @@ describe('When using the user invitation service', () => {
       const actual = await Directories.validateOsaCredentials(id, username, password);
 
       expect(rp.mock.calls.length).toBe(1);
-      expect(actual).toBe(false);
+      expect(actual).toBeNull();
     });
-    it('then if the password is not part of the response then false is returned', async () => {
+    it('then if the password is not part of the response then null is returned', async () => {
       rp.mockReturnValue(
         {
           id: 'invitation1',
@@ -151,9 +151,9 @@ describe('When using the user invitation service', () => {
       const actual = await Directories.validateOsaCredentials(id, username, password);
 
       expect(rp.mock.calls.length).toBe(1);
-      expect(actual).toBe(false);
+      expect(actual).toBeNull();
     });
-    it('then if the salt is not part of the response then false is returned', async () => {
+    it('then if the salt is not part of the response then null is returned', async () => {
       rp.mockReturnValue(
         {
           id: 'invitation1',
@@ -166,9 +166,9 @@ describe('When using the user invitation service', () => {
       const actual = await Directories.validateOsaCredentials(id, username, password);
 
       expect(rp.mock.calls.length).toBe(1);
-      expect(actual).toBe(false);
+      expect(actual).toBeNull();
     });
-    it('then the username and password are checked against the invitation record and false returned if they dont match', async () => {
+    it('then the username and password are checked against the invitation record and null is returned if they dont match', async () => {
 
       rp.mockReturnValue(
         {
@@ -184,12 +184,15 @@ describe('When using the user invitation service', () => {
       const actual = await Directories.validateOsaCredentials(id, username, password);
 
       expect(rp.mock.calls.length).toBe(1);
-      expect(actual).toBe(false);
+      expect(actual).toBeNull();
     });
     it('then true is returned if the username and password match', async () => {
       rp.mockReturnValue(
         {
           id: 'invitation1',
+          firstName: 'Test',
+          lastName: 'User',
+          email: 'test@user.com',
           oldCredentials: {
             salt: '1234567',
             password: '36f9bee6c0cb7443f0feb14b0a8e7347ffc1f7725c990613bc635d1133f138728a81ffca139ea7317ad3082f8609cd4760020313c84494262773a128afb00478',
@@ -201,7 +204,11 @@ describe('When using the user invitation service', () => {
       const actual = await Directories.validateOsaCredentials(id, username, password);
 
       expect(rp.mock.calls.length).toBe(1);
-      expect(actual).toBe(true);
+      expect(actual).not.toBeNull();
+      expect(actual.firstName).toBe('Test');
+      expect(actual.lastName).toBe('User');
+      expect(actual.email).toBe('test@user.com');
+      expect(actual.oldCredentials).toBe(undefined);
     });
   });
 });

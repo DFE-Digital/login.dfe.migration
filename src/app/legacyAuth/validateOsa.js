@@ -6,12 +6,12 @@ const validateOsa = async (req, res) => {
 
   const invitationResult = await invitations.validateOsaCredentials(req.body.id, req.body.username, req.body.password);
 
-  if(invitationResult === true) {
+  if(invitationResult) {
     req.session.invitation = {
-      id: '8226a3d1-823a-4e52-83b3-6e6a117cef0f',
-      firstName: 'Wade',
-      lastName: 'Wilson',
-      email: 'wwilson@x-force.test'
+      id: invitationResult.id,
+      firstName: invitationResult.firstName,
+      lastName: invitationResult.lastName,
+      email: invitationResult.email
     };
     //todo go to details page
 

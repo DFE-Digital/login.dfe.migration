@@ -59,14 +59,25 @@ class InvitationsApiAccount extends Invitation {
     const invitation = await this.getById(id);
 
     if (!invitation) {
-      return false;
+      return null;
     }
 
     if (!invitation.oldCredentials || !invitation.oldCredentials.username || !invitation.oldCredentials.password || !invitation.oldCredentials.salt) {
-      return false
+      return null;
     }
 
-    return validateCredentials(username, password,invitation.oldCredentials.salt, invitation.oldCredentials.username, invitation.oldCredentials.password);
+    const result = validateCredentials(username, password,invitation.oldCredentials.salt, invitation.oldCredentials.username, invitation.oldCredentials.password);
+
+    if(result === false) {
+      return null;
+    }
+
+    return {
+      id: invitation.id,
+      firstName: invitation.firstName,
+      lastName: invitation.lastName,
+      email: invitation.email
+    };
 
   }
 
