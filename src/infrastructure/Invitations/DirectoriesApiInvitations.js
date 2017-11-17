@@ -2,6 +2,8 @@ const Invitation = require('./Invitation');
 const rp = require('request-promise');
 const jwtStrategy = require('login.dfe.jwt-strategies');
 const config = require('./../config');
+const crypto = require('crypto');
+const {promisify} = require('util');
 
 const callDirectoriesApi = async (resource, body, method = 'POST') => {
   const token = await jwtStrategy(config.directories.service).getBearerToken();
@@ -32,6 +34,11 @@ const callDirectoriesApi = async (resource, body, method = 'POST') => {
   }
 };
 
+const validateCredentials = async (username, password, salt, osaUserName, osaPassword) => {
+  return true;
+
+};
+
 class InvitationsApiAccount extends Invitation {
 
   static async getById(id) {
@@ -45,11 +52,19 @@ class InvitationsApiAccount extends Invitation {
     return response.result;
   }
 
-  static async validateOsaCredentials(id, userName,password) {
+  static async validateOsaCredentials(id, username, password) {
 
     const invitation = await this.getById(id);
 
+    if (!invitation) {
+      return false;
+    }
 
+    if (!invitation.username || !invitation.password || !invitation.salt) {
+      return false
+    }
+
+    return await validateCredentials(username, password,invitation.salt, invitation.username, invitation.password);
 
   }
 

@@ -2,9 +2,9 @@
 
 const invitations = require('./../../infrastructure/Invitations/DirectoriesApiInvitations');
 
-const legacyAuth = async (req, res) => {
+const validateOsa = async (req, res) => {
 
-  const invitation = await invitations.getById(req.params.id);
+  const invitationResult = await invitations.validateOsaCredentials(req.body.id, req.body.username, req.body.password);
 
 
   res.render('legacyAuth/views/legacyAuth', {
@@ -14,4 +14,4 @@ const legacyAuth = async (req, res) => {
   });
 };
 
-module.exports = legacyAuth;
+module.exports = validateOsa;

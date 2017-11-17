@@ -1,11 +1,11 @@
-const DirectoriesApiAccount = require('./DirectoriesApiInvitations');
-const StaticAccount = require('./StaticInvitations');
-const config = require('./../config')();
+const DirectoriesApiInvitations = require('./DirectoriesApiInvitations');
+const StaticInvitations = require('./StaticInvitations');
+const config = require('./../config');
 
 let account;
 if(config.directories.type.toLowerCase() === 'api') {
-  account = DirectoriesApiAccount;
+  account = DirectoriesApiInvitations;
 } else {
-  account = StaticAccount;
+  account = StaticInvitations;
 }
 module.exports = account;
