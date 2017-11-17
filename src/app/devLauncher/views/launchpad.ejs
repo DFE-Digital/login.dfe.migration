@@ -3,13 +3,20 @@
         <h1 class="heading-xlarge">
             Development Launcher
         </h1>
-        <p class="lede">Hello <span class="bold"><%=locals.user.email %></span>, these helper actions are only enabled in development mode and are used to facilitate development and debugging of this service.</p>
+        <p class="lede">Hello <span class="bold">
+                <% if (locals.user) { %>
+                <%= locals.user.email %>
+                <% } %>
+            </span>, these helper actions are only enabled in development mode and are used to facilitate development and debugging of this service.</p>
+        <% if (locals.user) { %>
         <p>Your user id is : <%= locals.user.sub %></p>
+        <% } %>
         <h2 class="heading-large">Routes</h2>
         <ul>
-            <% for(let i = 0; i < locals.routes.length; i++) {%>
-                <% let route = locals.routes[i] %>
-                <li class="route "><div class="method <%= route.methods[0].toLowerCase() %>"><%= route.methods[0] %></div><%= route.path %></li>
+            <% for(let i = 0; i < locals.routes.length; i++) { %>
+            <% let route = locals.routes[i] %>
+            <li class="route ">
+                <div class="method <%= route.methods[0].toLowerCase() %>"><%= route.methods[0] %></div><%= route.path %></li>
             <% } %>
         </ul>
     </div>
@@ -17,7 +24,7 @@
 
 <style>
     li.route {
-       border: 1px solid #aaa;
+        border: 1px solid #aaa;
         background-color: #eee;
         padding: 15px;
         margin: 5px 0;

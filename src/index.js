@@ -19,10 +19,7 @@ const config = require('./infrastructure/config');
 const csrf = csurf({ cookie: true });
 
 
-const homeScreen = require('./app/home');
-const userDetails = require('./app/userDetails');
-const newPassword = require('./app/newPassword');
-const complete = require('./app/complete');
+
 
 
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -44,10 +41,7 @@ app.use(session({
 
 app.use(cookieParser());
 app.use(flash());
-app.use('/', homeScreen());
-app.use('/my-details', userDetails());
-app.use('/new-password', newPassword(csrf));
-app.use('/complete', complete());
+
 
 setupAppRoutes(app, csrf);
 
