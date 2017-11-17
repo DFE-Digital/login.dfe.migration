@@ -1,5 +1,5 @@
 {
-  "name": "login.dfe.migration.admin",
+  "name": "login.dfe.migration",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -12,14 +12,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/DFE-Digital/login.dfe.node-boilerplate.git"
+    "url": "git+https://github.com/DFE-Digital/login.dfe.migration.git"
   },
   "author": "",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/DFE-Digital/login.dfe.node-boilerplate/issues"
+    "url": "https://github.com/DFE-Digital/login.dfe.migration/issues"
   },
-  "homepage": "https://github.com/DFE-Digital/login.dfe.node-boilerplate#readme",
+  "homepage": "https://github.com/DFE-Digital/login.dfe.migration#readme",
   "dependencies": {
     "body-parser": "^1.18.1",
     "cookie-parser": "^1.4.3",
@@ -28,6 +28,7 @@
     "express": "^4.15.4",
     "express-ejs-layouts": "^2.3.1",
     "express-list-endpoints": "^3.0.1",
+    "express-session": "^1.15.6",
     "lodash": "^4.17.4",
     "login.dfe.jwt-strategies": "github:DFE-Digital/login.dfe.jwt-strategies#master",
     "morgan": "^1.9.0",

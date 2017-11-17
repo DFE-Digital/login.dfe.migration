@@ -1,0 +1,27 @@
+<a href="step2" class="link-back">Back</a>
+<div class="grid-row">
+    <div class="col-8">
+        <h1 class="heading-xlarge">
+            Are these your details?
+        </h1>
+        <p class="lede">Check the details below to see if they belong to you</p>
+        <dl class="rows">
+            <dt>First name</dt>
+            <dd><%=firstName%></dd>
+            <dt>Last name</dt>
+            <dd><%=lastName%></dd>
+            <dt>Organisation</dt>
+            <dd><%=organisation.name%></dd>
+            <dt>Email</dt>
+            <dd><%=email%></dd>
+        </dl>
+
+        <div class="panel panel-border-wide">
+            <p>If you need to edit any of these details, you can do so once you are signed-in at the end of this process</p>
+        </div>
+
+        <p>
+            <a href="/new-password" class="button">Continue</a>
+        </p>
+    </div>
+</div>

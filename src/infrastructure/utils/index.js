@@ -1,7 +1,11 @@
 'use strict';
 
 const isLoggedIn = (req, res, next) => {
-  return next();
+  if (req.session.invitation) {
+    req.user = req.session.invitation;
+    return next();
+  }
+  return res.status(302).redirect('/');
   // if(req.isAuthenticated()) {
   //   return next();
   // }
@@ -18,7 +22,7 @@ const getUserDisplayName = (user) => {
 };
 
 
-const setUserContext = (req, res, next)=> {
+const setUserContext = (req, res, next) => {
   if (req.user) {
     res.locals.user = req.user;
     res.locals.displayName = getUserDisplayName(req.user);
@@ -26,4 +30,4 @@ const setUserContext = (req, res, next)=> {
   next();
 };
 
-module.exports = {isLoggedIn, getUserEmail, getUserDisplayName, setUserContext};
+module.exports = { isLoggedIn, getUserEmail, getUserDisplayName, setUserContext };
