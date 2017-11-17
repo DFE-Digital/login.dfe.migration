@@ -2,8 +2,7 @@ const Invitation = require('./Invitation');
 const rp = require('request-promise');
 const jwtStrategy = require('login.dfe.jwt-strategies');
 const config = require('./../config');
-const crypto = require('crypto');
-const {promisify} = require('util');
+const {createHash} = require('crypto');
 
 const callDirectoriesApi = async (resource, body, method = 'POST') => {
   const token = await jwtStrategy(config.directories.service).getBearerToken();
@@ -35,7 +34,10 @@ const callDirectoriesApi = async (resource, body, method = 'POST') => {
 };
 
 const validateCredentials = async (username, password, salt, osaUserName, osaPassword) => {
-  return true;
+  const hash = createHash('sha512');
+  hash.update(password + salt, 'utf8');
+  const hashed = hash.digest('hex');
+  return hashed === osaPassword && username.toLowerCase() === osaUserName.toLowerCase();
 
 };
 

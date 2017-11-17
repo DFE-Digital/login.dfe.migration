@@ -188,9 +188,9 @@ describe('When using the user invitation service', () => {
       rp.mockReturnValue(
         {
           id: 'invitation1',
-          username: 'user1',
-          password: 'my-Password',
-          salt: '1234567'
+          salt: '1234567',
+          password: '36f9bee6c0cb7443f0feb14b0a8e7347ffc1f7725c990613bc635d1133f138728a81ffca139ea7317ad3082f8609cd4760020313c84494262773a128afb00478',
+          username: 'USER1'
         },
       );
 
