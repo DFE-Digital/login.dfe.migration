@@ -15,6 +15,9 @@ const getServicesForInvitation = async (invitationId) => {
       json: true,
     });
   } catch (e) {
+    if (e.statusCode === 404) {
+      return null;
+    }
     throw e;
   }
 };
