@@ -1,5 +1,13 @@
 
 <a href="step1" class="link-back">Back</a>
+
+<% if (locals.validationMessages.validationFailed && !locals.validationMessages.username && !locals.validationMessages.password) { %>
+<div class="notification notification-error" tabindex="-1">
+    <h1 class="bold-medium">Invalid credentials</h1>
+    <p>Your Secure Access sign-in details were not recognised</p>
+</div>
+<% } %>
+
 <div class="grid-row">
     <div class="col-8">
         <h1 class="heading-xlarge">
