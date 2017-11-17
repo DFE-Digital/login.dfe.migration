@@ -10,7 +10,7 @@
 </div>
 <div class="grid-row">
     <div class="col-12">
-        <form method="get" action="step3">
+        <form method="post">
             <input type="hidden" name="_csrf" value="<%=csrfToken%>" />
             <div class="form-group">
                 <label class="form-label" for="username">Secure access username</label>
@@ -22,7 +22,7 @@
                     <input class="form-control" id="password" name="password" type="password" required="required">
                 </div>
             </div>
-            <input type="hidden" value="<%=locals.id%>">
+            <input type="hidden" name="id" id="invitationId" value="<%=locals.id%>">
             <input type="submit" class="button" value="Continue">
         </form>
     </div>

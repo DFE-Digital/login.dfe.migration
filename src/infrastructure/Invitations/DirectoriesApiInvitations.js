@@ -33,7 +33,7 @@ const callDirectoriesApi = async (resource, body, method = 'POST') => {
   }
 };
 
-const validateCredentials = async (username, password, salt, osaUserName, osaPassword) => {
+const validateCredentials = (username, password, salt, osaUserName, osaPassword) => {
   const hash = createHash('sha512');
   hash.update(password + salt, 'utf8');
   const hashed = hash.digest('hex');
@@ -62,11 +62,11 @@ class InvitationsApiAccount extends Invitation {
       return false;
     }
 
-    if (!invitation.username || !invitation.password || !invitation.salt) {
+    if (!invitation.oldCredentials || !invitation.oldCredentials.username || !invitation.oldCredentials.password || !invitation.oldCredentials.salt) {
       return false
     }
 
-    return await validateCredentials(username, password,invitation.salt, invitation.username, invitation.password);
+    return validateCredentials(username, password,invitation.oldCredentials.salt, invitation.oldCredentials.username, invitation.oldCredentials.password);
 
   }
 
