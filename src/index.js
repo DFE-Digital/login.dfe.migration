@@ -15,7 +15,6 @@ const csrf = csurf({ cookie: true });
 const app = express();
 const config = require('./infrastructure/config');
 
-const userDetails = require('./app/userDetails');
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
@@ -31,8 +30,6 @@ app.use(session({
   secret: config.hostingEnvironment.sessionSecret
 }));
 
-app.use('/', homeScreen());
-app.use('/my-details', userDetails());
 setupAppRoutes(app, csrf);
 
 if (config.hostingEnvironment.env === 'dev') {
