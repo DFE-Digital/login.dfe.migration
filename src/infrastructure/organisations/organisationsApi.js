@@ -22,6 +22,30 @@ const getServicesForInvitation = async (invitationId) => {
   }
 };
 
+const migrateInvitationServicesToUserServices = async (invitationId, userId) => {
+  try {
+    const token = await jwtStrategy(config.organisations.service).getBearerToken();
+
+    return await rp({
+      method: 'POST',
+      uri: `${config.organisations.service.url}/invitations/${invitationId}/migrate-to-user`,
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+      body: {
+        userId: user_id,
+      },
+      json: true,
+    });
+  } catch (e) {
+    if (e.statusCode === 404) {
+      return null;
+    }
+    throw e;
+  }
+};
+
 module.exports = {
   getServicesForInvitation,
+  migrateInvitationServicesToUserServices,
 };
