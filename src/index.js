@@ -18,7 +18,8 @@ const app = express();
 const config = require('./infrastructure/config');
 const csrf = csurf({ cookie: true });
 
-
+const { migrationSchema, validateConfigAndQuitOnError } = require('login.dfe.config.schema');
+validateConfigAndQuitOnError(migrationSchema, config, logger);
 
 
 
