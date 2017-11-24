@@ -1,4 +1,3 @@
-const Invitation = require('./Invitation');
 const rp = require('request-promise');
 const jwtStrategy = require('login.dfe.jwt-strategies');
 const config = require('./../config');
@@ -41,53 +40,52 @@ const validateCredentials = (username, password, salt, osaUserName, osaPassword)
 
 };
 
-class InvitationsApiAccount extends Invitation {
-
-  static async getById(id) {
-    const response = await callDirectoriesApi(`invitations/${id}`, null, 'GET');
-    if (!response.success) {
-      if (response.statusCode === 404) {
-        return null;
-      }
-      throw new Error(response.errorMessage);
-    }
-    return response.result;
-  }
-
-  static async validateOsaCredentials(id, username, password) {
-
-    const invitation = await this.getById(id);
-
-    if (!invitation) {
+const getById = async (id) => {
+  const response = await callDirectoriesApi(`invitations/${id}`, null, 'GET');
+  if (!response.success) {
+    if (response.statusCode === 404) {
       return null;
     }
+    throw new Error(response.errorMessage);
+  }
+  return response.result;
+};
 
-    if (!invitation.oldCredentials || !invitation.oldCredentials.username || !invitation.oldCredentials.password || !invitation.oldCredentials.salt) {
-      return null;
-    }
+const validateOsaCredentials = async (id, username, password) => {
+  const invitation = await getById(id);
 
-    const result = validateCredentials(username, password, invitation.oldCredentials.salt, invitation.oldCredentials.username, invitation.oldCredentials.password);
-
-    if (result === false) {
-      return null;
-    }
-
-    return {
-      id: invitation.id,
-      firstName: invitation.firstName,
-      lastName: invitation.lastName,
-      email: invitation.email
-    };
+  if (!invitation) {
+    return null;
   }
 
-  static async createUser(invitationId, password) {
-    const response = await callDirectoriesApi(`invitations/${invitationId}/create_user`, {
-      password,
-    });
-
-    return response.success ? response.result : false;
+  if (!invitation.oldCredentials || !invitation.oldCredentials.username || !invitation.oldCredentials.password || !invitation.oldCredentials.salt) {
+    return null;
   }
 
-}
+  const result = validateCredentials(username, password, invitation.oldCredentials.salt, invitation.oldCredentials.username, invitation.oldCredentials.password);
 
-module.exports = InvitationsApiAccount;
+  if (result === false) {
+    return null;
+  }
+
+  return {
+    id: invitation.id,
+    firstName: invitation.firstName,
+    lastName: invitation.lastName,
+    email: invitation.email,
+  };
+};
+
+const createUser = async (invitationId, password) => {
+  const response = await callDirectoriesApi(`invitations/${invitationId}/create_user`, {
+    password,
+  });
+
+  return response.success ? response.result : false;
+};
+
+module.exports = {
+  getById,
+  validateOsaCredentials,
+  createUser,
+};
