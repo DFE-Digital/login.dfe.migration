@@ -2,7 +2,7 @@ const Invitation = require('./Invitation');
 const rp = require('request-promise');
 const jwtStrategy = require('login.dfe.jwt-strategies');
 const config = require('./../config');
-const {createHash} = require('crypto');
+const { createHash } = require('crypto');
 
 const callDirectoriesApi = async (resource, body, method = 'POST') => {
   const token = await jwtStrategy(config.directories.service).getBearerToken();
@@ -66,9 +66,9 @@ class InvitationsApiAccount extends Invitation {
       return null;
     }
 
-    const result = validateCredentials(username, password,invitation.oldCredentials.salt, invitation.oldCredentials.username, invitation.oldCredentials.password);
+    const result = validateCredentials(username, password, invitation.oldCredentials.salt, invitation.oldCredentials.username, invitation.oldCredentials.password);
 
-    if(result === false) {
+    if (result === false) {
       return null;
     }
 
@@ -78,7 +78,14 @@ class InvitationsApiAccount extends Invitation {
       lastName: invitation.lastName,
       email: invitation.email
     };
+  }
 
+  static async createUser(invitationId, password) {
+    const response = await callDirectoriesApi(`invitations/${invitationId}/create_user`, {
+      password,
+    });
+
+    return response.success ? response.result : false;
   }
 
 }
