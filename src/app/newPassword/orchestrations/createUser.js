@@ -2,7 +2,7 @@
 
 const Invitations = require('./../../../infrastructure/Invitations');
 
-const handler = async (invitationId, password) => {
+const handler = (invitationId, password) => {
   return Invitations.createUser(invitationId, password);
 };
 
