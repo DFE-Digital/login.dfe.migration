@@ -1,7 +1,9 @@
 'use strict';
-const {invitations} = require('./../../../infrastructure/directory');
-const handler = async (invitationId, password) => {
-  return await invitations.createUser(invitationId, password);
+
+const Invitations = require('./../../../infrastructure/Invitations');
+
+const handler = (invitationId, password) => {
+  return Invitations.createUser(invitationId, password);
 };
 
 module.exports = handler;
