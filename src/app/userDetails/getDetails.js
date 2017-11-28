@@ -9,8 +9,8 @@ const action = async (req, res) => {
     lastName: req.user.lastName,
     email: req.user.email,
     organisation: {
-      name: org.name
-    }
+      name: org.name,
+    },
   };
 
   res.render('userDetails/views/viewDetails', user);

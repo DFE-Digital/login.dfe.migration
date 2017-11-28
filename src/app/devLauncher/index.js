@@ -2,13 +2,12 @@
 
 const express = require('express');
 const uuid = require('uuid/v4');
-const {isLoggedIn} = require('../../infrastructure/utils');
 const logger = require('../../infrastructure/logger');
-const listEndpoints = require('express-list-endpoints')
+const listEndpoints = require('express-list-endpoints');
 
 const router = express.Router({ mergeParams: true });
 
-const devLauncher = (csrf) => {
+const devLauncher = () => {
   logger.info('Mounting dev routes');
 
   router.get('/', (req, res) => {

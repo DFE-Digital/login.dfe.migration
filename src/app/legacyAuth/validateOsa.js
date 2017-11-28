@@ -26,10 +26,9 @@ const validate = (username, password) => {
 };
 
 const validateOsa = async (req, res) => {
+  const formValidationResult = validate(req.body.username, req.body.password);
 
-  const formValidationResult = validate(req.body.username,req.body.password);
-
-  if(formValidationResult.failed) {
+  if (formValidationResult.failed) {
     res.render('legacyAuth/views/legacyAuth', {
       title: 'Sign in to Secure Access',
       csrfToken: req.csrfToken(),
@@ -43,15 +42,15 @@ const validateOsa = async (req, res) => {
 
   const invitationResult = await invitations.validateOsaCredentials(req.body.id, req.body.username, req.body.password);
 
-  if(invitationResult) {
+  if (invitationResult) {
     req.session.invitation = {
       id: invitationResult.id,
       firstName: invitationResult.firstName,
       lastName: invitationResult.lastName,
-      email: invitationResult.email
+      email: invitationResult.email,
     };
     res.redirect('../my-details');
-  }else{
+  } else {
     res.render('legacyAuth/views/legacyAuth', {
       title: 'Sign in to Secure Access',
       csrfToken: req.csrfToken(),
@@ -61,11 +60,9 @@ const validateOsa = async (req, res) => {
       validationMessages: {
         username: '',
         password: '',
-      }
+      },
     });
   }
-
-
 };
 
 module.exports = validateOsa;

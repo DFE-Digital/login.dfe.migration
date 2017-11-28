@@ -16,11 +16,12 @@ const setupAppRoutes = require('./app/routes');
 
 const app = express();
 const config = require('./infrastructure/config');
+
 const csrf = csurf({ cookie: true });
 
 const { migrationSchema, validateConfigAndQuitOnError } = require('login.dfe.config.schema');
-validateConfigAndQuitOnError(migrationSchema, config, logger);
 
+validateConfigAndQuitOnError(migrationSchema, config, logger);
 
 
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -36,7 +37,7 @@ app.set('layout', 'layouts/layout');
 app.use(session({
   resave: true,
   saveUninitialized: true,
-  secret: config.hostingEnvironment.sessionSecret
+  secret: config.hostingEnvironment.sessionSecret,
 }));
 
 
@@ -57,7 +58,7 @@ if (config.hostingEnvironment.env === 'dev') {
 
       firstName: 'Wade',
       lastName: 'Wilson',
-      email: 'wwilson@x-force.test'
+      email: 'wwilson@x-force.test',
     };
     res.redirect('/my-details');
   });

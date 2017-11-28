@@ -37,7 +37,6 @@ const validateCredentials = (username, password, salt, osaUserName, osaPassword)
   hash.update(password + salt, 'utf8');
   const hashed = hash.digest('hex');
   return hashed === osaPassword && username.toLowerCase() === osaUserName.toLowerCase();
-
 };
 
 const getById = async (id) => {

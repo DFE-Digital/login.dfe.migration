@@ -36,6 +36,7 @@
     "login.dfe.validation": "github:DFE-Digital/login.dfe.validation#v1.0.0",
     "morgan": "^1.9.0",
     "request-promise": "^4.2.2",
+    "uuid": "^3.1.0",
     "winston": "^2.4.0",
     "winston-redis": "^1.0.0"
   },
@@ -43,6 +44,7 @@
     "eslint": "^4.11.0",
     "eslint-config-airbnb-base": "^11.3.1",
     "eslint-plugin-import": "^2.7.0",
+    "eslint-plugin-jest": "^21.2.0",
     "jest": "^21.2.1",
     "jest-cli": "^21.2.1",
     "node-mocks-http": "^1.6.6"
