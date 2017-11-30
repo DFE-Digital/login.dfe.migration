@@ -4,6 +4,7 @@
 const devRoutes = require('./../devLauncher');
 const migrationHome = require('./../home');
 const osaAuth = require('../osaAuth');
+const easAuth = require('../easAuth');
 const userDetails = require('./../userDetails');
 const newPassword = require('./../newPassword');
 const complete = require('./../complete');
@@ -12,6 +13,7 @@ const config = require('./../../infrastructure/config');
 const routes = (app, csrf) => {
   if (config.hostingEnvironment.showDevViews === 'true') app.use('/dev', devRoutes(csrf));
   app.use('/osa-auth', osaAuth(csrf));
+  app.use('/eas-auth', easAuth(csrf));
   app.use('/my-details', userDetails());
   app.use('/new-password', newPassword(csrf));
   app.use('/complete', complete());
