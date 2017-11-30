@@ -2,16 +2,15 @@
 
 const express = require('express');
 const logger = require('../../infrastructure/logger');
-const legacyAuth = require('./legacyAuth');
-const post = require('./validateOsa');
+
+const showOsaAuth = require('./showOsaAuth');
 
 const router = express.Router({ mergeParams: true });
 
 const home = (csrf) => {
-  logger.info('Mounting legacy auth routes');
+  logger.info('Mounting eas auth routes');
 
-  router.get('/:id', csrf, legacyAuth);
-  router.post('/:id', csrf, post);
+  router.get('/:id', csrf, showOsaAuth);
 
   return router;
 };

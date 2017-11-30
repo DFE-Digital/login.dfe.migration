@@ -1,7 +1,7 @@
 'use strict';
 
 const legacyAuth = async (req, res) => {
-  res.render('legacyAuth/views/legacyAuth', {
+  res.render('osaAuth/views/osaAuth', {
     title: 'Sign in to Secure Access',
     csrfToken: req.csrfToken(),
     id: req.params.id,
