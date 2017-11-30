@@ -9,7 +9,7 @@ const legacyAuth = async (req, res) => {
     validationMessages: {
       username: '',
       password: '',
-    }
+    },
   });
 };
 

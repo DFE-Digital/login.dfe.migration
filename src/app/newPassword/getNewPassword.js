@@ -6,7 +6,7 @@ const handler = async (req, res) => {
     confirmPassword: '',
     validationFailed: false,
     validationMessages: {},
-    csrfToken: req.csrfToken()
+    csrfToken: req.csrfToken(),
   });
 };
 

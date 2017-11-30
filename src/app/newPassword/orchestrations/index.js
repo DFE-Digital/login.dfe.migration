@@ -3,12 +3,13 @@
 const logger = require('./../../../infrastructure/logger');
 const createUserFromInvitationWithPassword = require('./createUser');
 const moveServicesFromInvitationToUser = require('./moveServices');
+
 const migrateInvitationToUser = async (invitationId, password) => {
-  if (!invitationId){
-    throw new Error("InvitationId Missing or invalid");
+  if (!invitationId) {
+    throw new Error('InvitationId Missing or invalid');
   }
-  if (!password){
-    throw new Error("Password missing or invalid");
+  if (!password) {
+    throw new Error('Password missing or invalid');
   }
 
   try {

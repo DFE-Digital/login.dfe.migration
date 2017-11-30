@@ -1,6 +1,8 @@
 'use strict';
-const {passwordPolicy} = require('login.dfe.validation');
-const {migrateInvitationToUser} = require('./orchestrations');
+
+const { passwordPolicy } = require('login.dfe.validation');
+const { migrateInvitationToUser } = require('./orchestrations');
+
 const validate = (newPassword, confirmPassword) => {
   const messages = {};
   let failed = false;
@@ -8,8 +10,7 @@ const validate = (newPassword, confirmPassword) => {
   if (newPassword.length === 0) {
     messages.newPassword = 'Please enter your new password';
     failed = true;
-  }
-  else if (!passwordPolicy.doesPasswordMeetPolicy(newPassword)) {
+  } else if (!passwordPolicy.doesPasswordMeetPolicy(newPassword)) {
     messages.newPassword = 'Your password does not meet the minimum requirements';
     failed = true;
   }
@@ -29,8 +30,8 @@ const validate = (newPassword, confirmPassword) => {
 };
 
 const handler = async (req, res) => {
-  let newPassword = req.body.newPassword;
-  let confirmPassword = req.body.confirmPassword;
+  const newPassword = req.body.newPassword;
+  const confirmPassword = req.body.confirmPassword;
   const validationResult = validate(newPassword, confirmPassword);
 
   if (validationResult.failed) {
@@ -41,7 +42,6 @@ const handler = async (req, res) => {
       validationFailed: true,
       validationMessages: validationResult.messages,
     });
-
   }
   const invitationId = req.session.invitation.id;
 
@@ -52,10 +52,10 @@ const handler = async (req, res) => {
   req.session.invitation = {};
   req.session.user = {
     id: user.sub,
-    email: user.email
+    email: user.email,
   };
   // redirect to the complete page
-  res.redirect('/complete');
+  return res.redirect('/complete');
 };
 
 module.exports = handler;

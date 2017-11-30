@@ -1,10 +1,8 @@
-const getById = async (id) => {
-  return {
-    id,
-    firstName: 'Test',
-    lastName: 'Tester',
-  };
-};
+const getById = async id => ({
+  id,
+  firstName: 'Test',
+  lastName: 'Tester',
+});
 
 const validateOsaCredentials = async (id, username, password) => {
   if (username.toLowerCase() === 'foo@example.com' && password === 'Password1') {
@@ -19,9 +17,7 @@ const validateOsaCredentials = async (id, username, password) => {
   return Promise.resolve(null);
 };
 
-const createUser = async () => {
-  return Promise.resolve();
-};
+const createUser = async () => Promise.resolve();
 
 module.exports = {
   getById,

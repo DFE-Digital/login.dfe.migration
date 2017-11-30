@@ -8,13 +8,9 @@ const isLoggedIn = (req, res, next) => {
   return res.status(302).redirect('/');
 };
 
-const getUserEmail = (user) => {
-  return user.email || '';
-};
+const getUserEmail = user => user.email || '';
 
-const getUserDisplayName = (user) => {
-  return `${user.given_name || ''} ${user.family_name || ''}`.trim();
-};
+const getUserDisplayName = user => `${user.given_name || ''} ${user.family_name || ''}`.trim();
 
 
 const setUserContext = (req, res, next) => {

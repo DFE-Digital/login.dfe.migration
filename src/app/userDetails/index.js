@@ -1,8 +1,9 @@
 'use strict';
 
 const express = require('express');
-const {isLoggedIn} = require('../../infrastructure/utils');
+const { isLoggedIn } = require('../../infrastructure/utils');
 const logger = require('../../infrastructure/logger');
+
 const router = express.Router({ mergeParams: true });
 
 const getDetails = require('./getDetails');

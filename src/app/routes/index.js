@@ -10,7 +10,7 @@ const complete = require('./../complete');
 const config = require('./../../infrastructure/config');
 
 const routes = (app, csrf) => {
-  if(config.hostingEnvironment.showDevViews === 'true') app.use('/dev',devRoutes(csrf));
+  if (config.hostingEnvironment.showDevViews === 'true') app.use('/dev', devRoutes(csrf));
   app.use('/osa-auth', legacyAuth(csrf));
   app.use('/my-details', userDetails());
   app.use('/new-password', newPassword(csrf));

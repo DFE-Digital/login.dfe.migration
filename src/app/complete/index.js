@@ -2,7 +2,8 @@
 
 const express = require('express');
 const logger = require('../../infrastructure/logger');
-const router = express.Router({mergeParams: true});
+
+const router = express.Router({ mergeParams: true });
 
 const getComplete = require('./getComplete');
 
