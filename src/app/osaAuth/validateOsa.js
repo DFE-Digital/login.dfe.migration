@@ -29,7 +29,7 @@ const validateOsa = async (req, res) => {
   const formValidationResult = validate(req.body.username, req.body.password);
 
   if (formValidationResult.failed) {
-    res.render('legacyAuth/views/legacyAuth', {
+    res.render('osaAuth/views/osaAuth', {
       title: 'Sign in to Secure Access',
       csrfToken: req.csrfToken(),
       id: req.params.id,
@@ -51,7 +51,7 @@ const validateOsa = async (req, res) => {
     };
     res.redirect('../my-details');
   } else {
-    res.render('legacyAuth/views/legacyAuth', {
+    res.render('osaAuth/views/osaAuth', {
       title: 'Sign in to Secure Access',
       csrfToken: req.csrfToken(),
       id: req.params.id,

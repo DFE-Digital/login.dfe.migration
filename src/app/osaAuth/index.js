@@ -8,7 +8,7 @@ const post = require('./validateOsa');
 const router = express.Router({ mergeParams: true });
 
 const home = (csrf) => {
-  logger.info('Mounting legacy auth routes');
+  logger.info('Mounting osa auth routes');
 
   router.get('/:id', csrf, legacyAuth);
   router.post('/:id', csrf, post);
