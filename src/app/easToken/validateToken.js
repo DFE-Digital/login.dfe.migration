@@ -1,5 +1,4 @@
 const { syncDigipassToken } = require('./../../infrastructure/devices');
-const invitations = require('./../../infrastructure/Invitations');
 
 const validate = (code1, code2) => {
   const messages = {
@@ -46,12 +45,9 @@ const action = async (req, res) => {
     });
   }
 
-  const invitation = await invitations.getById(req.params.id);
-  if (!invitation) {
-    return res.status(404).send();
-  }
+  const invitation = req.session.invitation;
 
-  const syncResult = await syncDigipassToken(invitation.oldCredentials.tokenSerialNumber, parseInt(code1), parseInt(code2));
+  const syncResult = await syncDigipassToken(invitation.tokenSerialNumber, parseInt(code1), parseInt(code2));
   if (!syncResult) {
     return res.render('easToken/views/easToken', {
       title: 'Enter your Digipass codes',
@@ -65,12 +61,8 @@ const action = async (req, res) => {
     });
   }
 
-  req.session.invitation = {
-    id: invitation.id,
-    firstName: invitation.firstName,
-    lastName: invitation.lastName,
-    email: invitation.email,
-  };
+  invitation.tokenSyncd = true;
+  req.session.invitation = invitation;
   return res.redirect('../my-details');
 };
 

@@ -1,6 +1,3 @@
-jest.mock('./../../../src/infrastructure/Invitations', () => ({
-  getById: jest.fn(),
-}));
 jest.mock('./../../../src/infrastructure/devices', () => {
   return {
     syncDigipassToken: jest.fn().mockReturnValue('poop'),
@@ -13,7 +10,6 @@ const validateToken = require('./../../../src/app/easToken/validateToken');
 describe('When validating eas tokens submitted by user', () => {
   let req;
   let res;
-  let invitations;
   let devices;
 
   beforeEach(() => {
@@ -26,22 +22,18 @@ describe('When validating eas tokens submitted by user', () => {
         code1: '12345678',
         code2: '12345679',
       },
-      session: {},
+      session: {
+        invitation: {
+          id: '123-456-789-000',
+          firstName: 'Frank',
+          lastName: 'Castle',
+          email: 'the.punisher@army.test',
+          tokenSerialNumber: '123312423',
+        }
+      },
     };
 
     res = httpMocks.createResponse();
-
-    invitations = require('./../../../src/infrastructure/Invitations');
-    invitations.getById = jest.fn().mockReturnValue({
-      id: '123-456-789-000',
-      firstName: 'Frank',
-      lastName: 'Castle',
-      email: 'the.punisher@army.test',
-      oldCredentials: {
-        source: 'EAS',
-        tokenSerialNumber: '123312423',
-      },
-    });
 
     devices = require('./../../../src/infrastructure/devices');
     devices.syncDigipassToken.mockReset();
@@ -157,14 +149,11 @@ describe('When validating eas tokens submitted by user', () => {
     });
   });
 
-  it('then it update session with user details', async () => {
+  it('then it update session with token syncd', async () => {
     await validateToken(req, res);
 
     expect(req.session.invitation).toMatchObject({
-      id: '123-456-789-000',
-      firstName: 'Frank',
-      lastName: 'Castle',
-      email: 'the.punisher@army.test',
+      tokenSyncd: true,
     });
   });
 
