@@ -1,1 +1,1 @@
-module.exports = require('./static');
+module.exports = require('./devicesApi');
