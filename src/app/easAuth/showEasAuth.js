@@ -1,4 +1,6 @@
 const action = (req, res) => {
+  req.session.invitation = null;
+
   res.render('easAuth/views/easAuth', {
     title: 'Sign in to using EAS details',
     csrfToken: req.csrfToken(),
