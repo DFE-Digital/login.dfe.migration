@@ -1,0 +1,44 @@
+<a href="../eas-auth/<%=locals.id%>" class="link-back">Back</a>
+
+<% if (locals.validationFailed && !locals.validationMessages.username && !locals.validationMessages.password) { %>
+<div class="notification notification-error" tabindex="-1">
+    <h1 class="bold-medium">Invalid codes</h1>
+    <p>The codes you entered are not correct</p>
+</div>
+<% } %>
+
+<div class="grid-row">
+    <div class="col-8">
+        <h1 class="heading-xlarge">
+            Enter your Digipass codes
+        </h1>
+        <p class="lede">To allow us to link your device to you new login, you need to enter two consecutive codes from your device</p>
+    </div>
+</div>
+<div class="grid-row">
+    <div class="col-12">
+        <form method="post">
+            <input type="hidden" name="_csrf" value="<%=csrfToken%>" />
+            <div class="form-group <%= locals.validationMessages.code1 ? 'form-group-error' : '' %>">
+                <label class="form-label" for="code1">First code</label>
+                <% if (locals.validationMessages.code1) { %>
+                <p class="error-message" id="validation-code1"><%=locals.validationMessages.code1%></p>
+                <% } %>
+                <input class="form-control" type="text" name="code1" id="code1" required="required" value="<%=locals.code1%>"
+                        <% if (locals.validationMessages.code1) { %> aria-invalid="true" aria-describedby="validation-code1" <% } %>>
+            </div>
+            <div class="form-group <%= locals.validationMessages.code2 ? 'form-group-error' : '' %>">
+                <label class="form-label" for="code2">Second code</label>
+                <% if (locals.validationMessages.code2) { %>
+                <p class="error-message" id="validation-code2"><%=locals.validationMessages.code2%></p>
+                <% } %>
+                <div>
+                    <input class="form-control" id="code2" name="code2" type="text" required="required"
+                            <% if (locals.validationMessages.password) { %> aria-invalid="true" aria-describedby="validation-password" <% } %>>
+                </div>
+            </div>
+            <input type="hidden" name="id" id="invitationId" value="<%=locals.id%>">
+            <input type="submit" class="button" value="Continue">
+        </form>
+    </div>
+</div>

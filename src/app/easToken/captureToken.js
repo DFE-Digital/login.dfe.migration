@@ -1,12 +1,12 @@
 const action = (req, res) => {
-  res.render('easAuth/views/easAuth', {
-    title: 'Sign in to using EAS details',
+  res.render('easToken/views/easToken', {
+    title: 'Enter your Digipass codes',
     csrfToken: req.csrfToken(),
     id: req.params.id,
     validationFailed: false,
     validationMessages: {
-      username: '',
-      password: '',
+      code1: '',
+      code2: '',
     },
   });
 };

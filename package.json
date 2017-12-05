@@ -31,7 +31,7 @@
     "express-list-endpoints": "^3.0.1",
     "express-session": "^1.15.6",
     "lodash": "^4.17.4",
-    "login.dfe.config.schema": "git+https://github.com/DFE-Digital/login.dfe.config.schema.git",
+    "login.dfe.config.schema": "git+https://github.com/DFE-Digital/login.dfe.config.schema.git#v1.1",
     "login.dfe.jwt-strategies": "github:DFE-Digital/login.dfe.jwt-strategies#v1.0.4",
     "login.dfe.validation": "github:DFE-Digital/login.dfe.validation#v1.0.0",
     "morgan": "^1.9.0",
