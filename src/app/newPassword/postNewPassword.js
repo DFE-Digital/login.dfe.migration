@@ -49,6 +49,7 @@ const handler = async (req, res) => {
   // copy all the org and service links
   // mark the invitation as complete
   const user = await migrateInvitationToUser(invitationId, newPassword);
+  req.session.completedInvitation = req.session.invitation;
   req.session.invitation = {};
   req.session.user = {
     id: user.sub,
