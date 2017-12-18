@@ -10,6 +10,7 @@ const fs = require('fs');
 const csurf = require('csurf');
 const path = require('path');
 const flash = require('express-flash-2');
+const appInsights = require('applicationinsights');
 
 const setupAppRoutes = require('./app/routes');
 
@@ -23,6 +24,9 @@ const { migrationSchema, validateConfigAndQuitOnError } = require('login.dfe.con
 
 validateConfigAndQuitOnError(migrationSchema, config, logger);
 
+if (config.hostingEnvironment.applicationInsights) {
+  appInsights.setup(config.hostingEnvironment.applicationInsights).start();
+}
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
