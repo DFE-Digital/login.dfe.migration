@@ -11,14 +11,27 @@ const csurf = require('csurf');
 const path = require('path');
 const flash = require('express-flash-2');
 const appInsights = require('applicationinsights');
+const helmet = require('helmet');
+const sanitization = require('login.dfe.sanitization');
 
 const setupAppRoutes = require('./app/routes');
+const config = require('./infrastructure/config');
 
 
 const app = express();
-const config = require('./infrastructure/config');
+app.use(helmet({
+  noCache: true,
+  frameguard: {
+    action: 'deny',
+  },
+}));
 
-const csrf = csurf({ cookie: true });
+const csrf = csurf({
+  cookie: {
+    secure: true,
+    httpOnly: true,
+  },
+});
 
 const { migrationSchema, validateConfigAndQuitOnError } = require('login.dfe.config.schema');
 
@@ -30,6 +43,7 @@ if (config.hostingEnvironment.applicationInsights) {
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
+app.use(sanitization());
 app.use(morgan('combined', { stream: fs.createWriteStream('./access.log', { flags: 'a' }) }));
 app.use(morgan('dev'));
 app.set('view engine', 'ejs');
@@ -42,6 +56,10 @@ app.use(session({
   resave: true,
   saveUninitialized: true,
   secret: config.hostingEnvironment.sessionSecret,
+  cookie: {
+    httpOnly: true,
+    secure: true,
+  },
 }));
 
 
