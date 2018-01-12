@@ -26,6 +26,10 @@ app.use(helmet({
   },
 }));
 
+if (config.hostingEnvironment.env !== 'dev') {
+  app.set('trust proxy', 1);
+}
+
 const csrf = csurf({
   cookie: {
     secure: true,
