@@ -7,12 +7,7 @@
       "auth": null
     },
     "logLevel": "info",
-    "colors": {
-      "info": "yellow",
-      "ok": "green",
-      "error": "red",
-      "audit": "magenta"
-    }
+    "applicationName" : "Migration"
   },
   "hostingEnvironment": {
     "portalUrl": "https://login-dfe-portal.herokuapp.com",
