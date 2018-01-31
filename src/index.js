@@ -1,22 +1,20 @@
+const config = require('./infrastructure/config');
+const logger = require('./infrastructure/logger');
+const appInsights = require('applicationinsights');
 const express = require('express');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const expressLayouts = require('express-ejs-layouts');
 const morgan = require('morgan');
-const logger = require('./infrastructure/logger');
 const https = require('https');
 const fs = require('fs');
 const csurf = require('csurf');
 const path = require('path');
 const flash = require('express-flash-2');
-const appInsights = require('applicationinsights');
 const helmet = require('helmet');
 const sanitization = require('login.dfe.sanitization');
-
 const setupAppRoutes = require('./app/routes');
-const config = require('./infrastructure/config');
-
 
 const app = express();
 app.use(helmet({
