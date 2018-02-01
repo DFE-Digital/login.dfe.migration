@@ -10,8 +10,10 @@ const userDetails = require('./../userDetails');
 const newPassword = require('./../newPassword');
 const complete = require('./../complete');
 const config = require('./../../infrastructure/config');
+const healthCheck = require('login.dfe.healthcheck');
 
 const routes = (app, csrf) => {
+  app.use('/healthcheck', healthCheck({ config }));
   if (config.hostingEnvironment.showDevViews === 'true') app.use('/dev', devRoutes(csrf));
   app.use('/osa-auth', osaAuth(csrf));
   app.use('/eas-auth', easAuth(csrf));
