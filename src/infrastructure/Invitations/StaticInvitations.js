@@ -18,9 +18,11 @@ const validateOsaCredentials = async (id, username, password) => {
 };
 
 const createUser = async () => Promise.resolve();
+const checkIfEmailAlreadyInUse = async () => Promise.resolve(false);
 
 module.exports = {
   getById,
   validateOsaCredentials,
   createUser,
+  checkIfEmailAlreadyInUse,
 };

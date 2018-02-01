@@ -25,6 +25,7 @@ describe('when rendering a welcome message', () => {
         source: 'OSA',
       },
     });
+    invitations.checkIfEmailAlreadyInUse = jest.fn().mockReturnValue(false);
   });
 
   it('then it should send success result', async () => {
@@ -67,6 +68,15 @@ describe('when rendering a welcome message', () => {
     await home(req, res);
 
     expect(res.statusCode).toBe(404);
+    expect(res._isEndCalled()).toBe(true);
+  });
+
+  it('then it should redirect to email-in-use if user with same email already exists', async () => {
+    invitations.checkIfEmailAlreadyInUse.mockReturnValue(true);
+
+    await home(req, res);
+
+    expect(res._getRedirectUrl()).toBe('/123-456-789-000/email-in-use');
     expect(res._isEndCalled()).toBe(true);
   });
 });

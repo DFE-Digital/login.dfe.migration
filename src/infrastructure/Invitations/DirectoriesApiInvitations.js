@@ -83,8 +83,20 @@ const createUser = async (invitationId, password) => {
   return response.success ? response.result : false;
 };
 
+const checkIfEmailAlreadyInUse = async (emailAddress) => {
+  const response = await callDirectoriesApi(`users/${emailAddress}`, null, 'GET');
+  if (!response.success) {
+    if (response.statusCode === 404) {
+      return false;
+    }
+    throw new Error(response.errorMessage);
+  }
+  return true;
+};
+
 module.exports = {
   getById,
   validateOsaCredentials,
   createUser,
+  checkIfEmailAlreadyInUse,
 };
