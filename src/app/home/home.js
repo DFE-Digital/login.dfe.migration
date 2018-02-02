@@ -8,6 +8,10 @@ const home = async (req, res) => {
     return res.status(404).send();
   }
 
+  if (invitation.isCompleted) {
+    return res.redirect(`/${req.params.id}/migration-complete`);
+  }
+
   const emailAlreadyInUse = await invitations.checkIfEmailAlreadyInUse(invitation.email);
   if (emailAlreadyInUse) {
     return res.redirect(`/${req.params.id}/email-in-use`);

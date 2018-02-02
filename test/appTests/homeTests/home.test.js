@@ -1,5 +1,6 @@
 jest.mock('./../../../src/infrastructure/Invitations', () => ({
   getById: jest.fn(),
+  checkIfEmailAlreadyInUse: jest.fn(),
 }));
 
 const httpMocks = require('node-mocks-http');
@@ -20,12 +21,12 @@ describe('when rendering a welcome message', () => {
     res = httpMocks.createResponse();
 
     invitations = require('./../../../src/infrastructure/Invitations');
+    invitations.checkIfEmailAlreadyInUse = jest.fn().mockReturnValue(false);
     invitations.getById = jest.fn().mockReturnValue({
       oldCredentials: {
         source: 'OSA',
       },
     });
-    invitations.checkIfEmailAlreadyInUse = jest.fn().mockReturnValue(false);
   });
 
   it('then it should send success result', async () => {
@@ -77,6 +78,20 @@ describe('when rendering a welcome message', () => {
     await home(req, res);
 
     expect(res._getRedirectUrl()).toBe('/123-456-789-000/email-in-use');
+    expect(res._isEndCalled()).toBe(true);
+  });
+
+  it('then it should redirect to migration-complete if invitation is completed', async () => {
+    invitations.getById.mockReturnValue({
+      oldCredentials: {
+        source: 'OSA',
+      },
+      isCompleted: true,
+    });
+
+    await home(req, res);
+
+    expect(res._getRedirectUrl()).toBe('/123-456-789-000/migration-complete');
     expect(res._isEndCalled()).toBe(true);
   });
 });
