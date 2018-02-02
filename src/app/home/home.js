@@ -8,6 +8,11 @@ const home = async (req, res) => {
     return res.status(404).send();
   }
 
+  const emailAlreadyInUse = await invitations.checkIfEmailAlreadyInUse(invitation.email);
+  if (emailAlreadyInUse) {
+    return res.redirect(`/${req.params.id}/email-in-use`);
+  }
+
   let viewName = 'home/views/home';
   if (invitation.oldCredentials.source === 'EAS') {
     viewName = 'home/views/home-eas';
