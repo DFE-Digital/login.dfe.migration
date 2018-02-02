@@ -14,7 +14,7 @@ const callDirectoriesApi = async (resource, body, method = 'POST') => {
       },
       json: true,
     };
-    if (method === 'POST') {
+    if (method !== 'GET') {
       opts.body = body;
     }
     const result = await rp(opts);
@@ -94,9 +94,14 @@ const checkIfEmailAlreadyInUse = async (emailAddress) => {
   return true;
 };
 
+const markInvitationAsComplete = async (id) => {
+  await callDirectoriesApi(`invitations/${id}`, { isCompleted: true }, 'PATCH');
+};
+
 module.exports = {
   getById,
   validateOsaCredentials,
   createUser,
   checkIfEmailAlreadyInUse,
+  markInvitationAsComplete,
 };
