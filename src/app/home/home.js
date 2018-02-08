@@ -22,7 +22,7 @@ const home = async (req, res) => {
     viewName = 'home/views/home-eas';
   }
   return res.render(viewName, {
-    title: 'Access DfE services',
+    title: 'DfE Sign-in',
     id: req.params.id,
   });
 };
