@@ -1,44 +1,69 @@
-<a href="../eas-auth/<%=locals.id%>" class="link-back">Back</a>
 
 <% if (locals.validationFailed && !locals.validationMessages.username && !locals.validationMessages.password) { %>
 <div class="notification notification-error" tabindex="-1">
-    <h1 class="bold-medium">Invalid codes</h1>
-    <p>The codes you entered are not correct</p>
+    <h1 class="bold-medium">Information missing or incorrect</h1>
+    <p>The codes you have entered are incorrect</p>
 </div>
 <% } %>
 
 <div class="grid-row">
     <div class="col-8">
         <h1 class="heading-xlarge">
-            Enter your Digipass codes
+            Sync your token
         </h1>
-        <p class="lede">To allow us to link your device to you new login, you need to enter two consecutive codes from your device</p>
+        <p class="lede">To use your token with DfE Sign-in, we need to sync your token with the system. </p>
     </div>
 </div>
-<div class="grid-row">
-    <div class="col-12">
-        <form method="post">
-            <input type="hidden" name="_csrf" value="<%=csrfToken%>" />
+
+<form method="post">
+    <input type="hidden" name="_csrf" value="<%=csrfToken%>" />
+    <div class="grid-row">
+        <div class="col-6">
+            <h2 class="heading-medium">Sync instructions</h2>
+            <ol class="list list-number">
+                <li>Press the arrow on the token</li>
+                <li>Enter your PIN</li>
+                <li>Enter the eight-digit code that appears on your token in the Token code 1 text field</li>
+            </ol>
             <div class="form-group <%= locals.validationMessages.code1 ? 'form-group-error' : '' %>">
-                <label class="form-label" for="code1">First code</label>
+                <label class="form-label" for="code1">Token code 1</label>
                 <% if (locals.validationMessages.code1) { %>
                 <p class="error-message" id="validation-code1"><%=locals.validationMessages.code1%></p>
                 <% } %>
-                <input class="form-control" type="text" name="code1" id="code1" required="required" value="<%=locals.code1%>"
+                <input class="form-control char-width-8" type="text" maxlength="8" name="code1" id="code1" required="required" value="<%=locals.code1%>"
                         <% if (locals.validationMessages.code1) { %> aria-invalid="true" aria-describedby="validation-code1" <% } %>>
             </div>
+        </div>
+        <div class="col-6">
+            <img src="https://rawgit.com/DFE-Digital/dfe.ui.toolkit/master/dist/images/token.svg" class="responsive spacing" alt="Token">
+        </div>
+    </div>
+    <div class="grid-row">
+        <div class="col-6">
+            <ol start="4" class="list list-number">
+                <li>Wait until the code clears from the token screen (this will take around 30 seconds)</li>
+                <li>Repeat steps 1 and 2, entering the new eight-digit code in the Token code 2 text field</li>
+            </ol>
             <div class="form-group <%= locals.validationMessages.code2 ? 'form-group-error' : '' %>">
-                <label class="form-label" for="code2">Second code</label>
+                <label class="form-label" for="code2">Token code 2</label>
                 <% if (locals.validationMessages.code2) { %>
                 <p class="error-message" id="validation-code2"><%=locals.validationMessages.code2%></p>
                 <% } %>
                 <div>
-                    <input class="form-control" id="code2" name="code2" type="text" required="required"
+                    <input class="form-control char-width-8" id="code2" name="code2" type="text" maxlength="8" required="required"
                             <% if (locals.validationMessages.password) { %> aria-invalid="true" aria-describedby="validation-password" <% } %>>
                 </div>
             </div>
             <input type="hidden" name="id" id="invitationId" value="<%=locals.id%>">
-            <input type="submit" class="button" value="Continue">
-        </form>
+            <div class="form-group">
+                <input type="submit" class="button" value="Continue">
+            </div>
+        </div>
+    </div>
+</form>
+
+<div class="grid-row">
+    <div class="col-8">
+        <%- include('../../includes/helpdesk'); %>
     </div>
 </div>
