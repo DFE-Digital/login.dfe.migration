@@ -58,7 +58,7 @@ describe('when rendering a welcome message', () => {
     await home(req, res);
 
     expect(res._getRenderData()).toMatchObject({
-      title: 'Access DfE services',
+      title: 'DfE Sign-in',
       id: req.params.id,
     });
   });

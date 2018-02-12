@@ -15,10 +15,7 @@ const action = async (req, res) => {
       csrfToken: req.csrfToken(),
       id: req.params.id,
       validationFailed: true,
-      validationMessages: {
-        username: '',
-        password: '',
-      },
+      validationMessages: {},
     });
   } else {
     req.session.invitation = {
