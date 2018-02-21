@@ -23,7 +23,9 @@ const action = async (req, res) => {
       csrfToken: req.csrfToken(),
       id: req.params.id,
       validationFailed: true,
-      validationMessages: {},
+      validationMessages: {
+        password: 'Invalid verification code'
+      },
     });
   } else {
     req.session.invitation = {
