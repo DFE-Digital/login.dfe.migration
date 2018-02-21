@@ -36,6 +36,7 @@ const handler = async (req, res) => {
 
   if (validationResult.failed) {
     return res.render('newPassword/views/newPassword', {
+      title: 'Create a new password for your DfE Sign-in account',
       csrfToken: req.csrfToken(),
       newPassword: '',
       confirmPassword: '',

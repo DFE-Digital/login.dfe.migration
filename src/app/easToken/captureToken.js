@@ -4,10 +4,7 @@ const action = (req, res) => {
     csrfToken: req.csrfToken(),
     id: req.params.id,
     validationFailed: false,
-    validationMessages: {
-      code1: '',
-      code2: '',
-    },
+    validationMessages: {},
   });
 };
 

@@ -5,6 +5,7 @@ const action = async (req, res) => {
   const org = services[0].organisation;
 
   const user = {
+    title: 'Your identity has been confirmed',
     firstName: req.user.firstName,
     lastName: req.user.lastName,
     email: req.user.email,
