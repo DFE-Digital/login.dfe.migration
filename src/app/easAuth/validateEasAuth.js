@@ -2,20 +2,30 @@
 
 const invitations = require('./../../infrastructure/Invitations');
 
+const validateCode = (invitation, code) => {
+  if (!code || !invitation.code) {
+    return false;
+  }
+
+  return invitation.code.toUpperCase() === code.toUpperCase();
+};
+
 const action = async (req, res) => {
   const invitation = await invitations.getById(req.params.id);
   if (!invitation) {
     return res.status(404).send();
   }
 
-  const validationResult = await invitations.validateOsaCredentials(req.params.id, req.body.username, req.body.password);
+  const validationResult = validateCode(invitation, req.body.password);
   if (!validationResult) {
     return res.render('easAuth/views/easAuth', {
       title: 'Sign in to using EAS details',
       csrfToken: req.csrfToken(),
       id: req.params.id,
       validationFailed: true,
-      validationMessages: {},
+      validationMessages: {
+        password: 'Invalid verification code'
+      },
     });
   } else {
     req.session.invitation = {
