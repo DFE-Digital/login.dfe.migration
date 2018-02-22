@@ -4,7 +4,7 @@ const appInsights = require('applicationinsights');
 const express = require('express');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
-const session = require('express-session');
+const session = require('cookie-session');
 const expressLayouts = require('express-ejs-layouts');
 const morgan = require('morgan');
 const https = require('https');
@@ -43,6 +43,14 @@ if (config.hostingEnvironment.applicationInsights) {
   appInsights.setup(config.hostingEnvironment.applicationInsights).start();
 }
 
+let expiryInMinutes = 30;
+const sessionExpiry = parseInt(config.hostingEnvironment.sessionCookieExpiryInMinutes);
+if (!isNaN(sessionExpiry)) {
+  expiryInMinutes = sessionExpiry;
+}
+const expiryDate = new Date(Date.now() + (60 * expiryInMinutes * 1000));
+
+
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(sanitization());
@@ -61,6 +69,7 @@ app.use(session({
   cookie: {
     httpOnly: true,
     secure: true,
+    expires: expiryDate,
   },
 }));
 
