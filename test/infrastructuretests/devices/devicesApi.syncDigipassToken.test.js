@@ -1,6 +1,7 @@
 jest.mock('request-promise');
 jest.mock('./../../../src/infrastructure/config', () => {
   return {
+    loggerSettings: {},
     devices: {
       service: {
         url: 'https://device.login.dfe.test',
