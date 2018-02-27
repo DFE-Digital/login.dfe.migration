@@ -1,6 +1,5 @@
 const config = require('./infrastructure/config');
 const logger = require('./infrastructure/logger');
-const appInsights = require('applicationinsights');
 const express = require('express');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
@@ -39,9 +38,6 @@ const { migrationSchema, validateConfigAndQuitOnError } = require('login.dfe.con
 
 validateConfigAndQuitOnError(migrationSchema, config, logger);
 
-if (config.hostingEnvironment.applicationInsights) {
-  appInsights.setup(config.hostingEnvironment.applicationInsights).start();
-}
 
 let expiryInMinutes = 30;
 const sessionExpiry = parseInt(config.hostingEnvironment.sessionCookieExpiryInMinutes);

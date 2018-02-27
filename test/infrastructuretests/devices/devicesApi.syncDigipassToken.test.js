@@ -9,6 +9,11 @@ jest.mock('./../../../src/infrastructure/config', () => {
     },
   };
 });
+jest.mock('./../../../src/infrastructure/logger', () => {
+  return {
+    error: jest.fn(),
+  };
+});
 jest.mock('login.dfe.jwt-strategies', () => {
   return jest.fn().mockImplementation(() => {
     return {
