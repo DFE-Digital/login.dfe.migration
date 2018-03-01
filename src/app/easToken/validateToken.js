@@ -47,7 +47,7 @@ const action = async (req, res) => {
 
   const invitation = req.session.invitation;
 
-  const syncResult = await syncDigipassToken(invitation.tokenSerialNumber, parseInt(code1), parseInt(code2));
+  const syncResult = await syncDigipassToken(invitation.tokenSerialNumber, code1, code2);
   if (!syncResult) {
     return res.render('easToken/views/easToken', {
       title: 'Enter your Digipass codes',
