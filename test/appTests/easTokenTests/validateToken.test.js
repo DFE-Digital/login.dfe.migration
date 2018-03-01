@@ -129,8 +129,8 @@ describe('When validating eas tokens submitted by user', () => {
 
     expect(devices.syncDigipassToken.mock.calls.length).toBe(1);
     expect(devices.syncDigipassToken.mock.calls[0][0]).toBe('123312423');
-    expect(devices.syncDigipassToken.mock.calls[0][1]).toBe(12345678);
-    expect(devices.syncDigipassToken.mock.calls[0][2]).toBe(12345679);
+    expect(devices.syncDigipassToken.mock.calls[0][1]).toBe('12345678');
+    expect(devices.syncDigipassToken.mock.calls[0][2]).toBe('12345679');
   });
 
   it('then it should render view with error if device sync fails', async () => {
