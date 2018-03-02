@@ -3,6 +3,7 @@
 const express = require('express');
 const uuid = require('uuid/v4');
 const logger = require('../../infrastructure/logger');
+const { asyncWrapper } = require('login.dfe.express-error-handling');
 const listEndpoints = require('express-list-endpoints');
 
 const router = express.Router({ mergeParams: true });
@@ -10,7 +11,7 @@ const router = express.Router({ mergeParams: true });
 const devLauncher = () => {
   logger.info('Mounting dev routes');
 
-  router.get('/', (req, res) => {
+  router.get('/', asyncWrapper((req, res) => {
     const routes = listEndpoints(req.app);
     res.render('devLauncher/views/launchpad', {
       title: 'Dev launcher',
@@ -18,7 +19,7 @@ const devLauncher = () => {
       user: req.user,
       routes,
     });
-  });
+  }));
 
   return router;
 };
