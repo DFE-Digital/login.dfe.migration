@@ -13,6 +13,7 @@ const path = require('path');
 const flash = require('express-flash-2');
 const helmet = require('helmet');
 const sanitization = require('login.dfe.sanitization');
+const { getErrorHandler, ejsErrorPages } = require('login.dfe.express-error-handling');
 const setupAppRoutes = require('./app/routes');
 
 const app = express();
@@ -73,6 +74,13 @@ app.use(flash());
 
 setupAppRoutes(app, csrf);
 
+const errorPageRenderer = ejsErrorPages.getErrorPageRenderer({
+  help: config.hostingEnvironment.helpUrl,
+}, config.hostingEnvironment.env === 'dev');
+app.use(getErrorHandler({
+  logger,
+  errorPageRenderer,
+}));
 
 if (config.hostingEnvironment.env === 'dev') {
   app.proxy = true;
