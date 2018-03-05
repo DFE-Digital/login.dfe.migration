@@ -45,11 +45,12 @@ const handler = async (req, res) => {
     });
   }
   const invitationId = req.session.invitation.id;
+  const serialNumber = req.session.invitation.tokenSerialNumber;
 
   // create a user
   // copy all the org and service links
   // mark the invitation as complete
-  const user = await migrateInvitationToUser(invitationId, newPassword);
+  const user = await migrateInvitationToUser(invitationId, newPassword, serialNumber, req.id);
   req.session.completedInvitation = req.session.invitation;
   req.session.invitation = {};
   req.session.user = {

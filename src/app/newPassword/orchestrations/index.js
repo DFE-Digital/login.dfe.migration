@@ -3,8 +3,9 @@
 const logger = require('./../../../infrastructure/logger');
 const createUserFromInvitationWithPassword = require('./createUser');
 const moveServicesFromInvitationToUser = require('./moveServices');
+const createUserDevice = require('./createUserDevice');
 
-const migrateInvitationToUser = async (invitationId, password) => {
+const migrateInvitationToUser = async (invitationId, password, serialNumber, correlationId) => {
   if (!invitationId) {
     throw new Error('InvitationId Missing or invalid');
   }
@@ -15,6 +16,11 @@ const migrateInvitationToUser = async (invitationId, password) => {
   try {
     const user = await createUserFromInvitationWithPassword(invitationId, password);
     await moveServicesFromInvitationToUser(invitationId, user.id);
+
+    if (serialNumber) {
+      await createUserDevice(user.id, serialNumber, correlationId);
+    }
+
     return user;
   } catch (e) {
     logger.error(e);
