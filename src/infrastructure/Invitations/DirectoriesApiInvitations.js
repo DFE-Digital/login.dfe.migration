@@ -3,7 +3,7 @@ const jwtStrategy = require('login.dfe.jwt-strategies');
 const config = require('./../config');
 const { createHash } = require('crypto');
 
-const callDirectoriesApi = async (resource, body, method = 'POST') => {
+const callDirectoriesApi = async (resource, body, method = 'POST', correlationId) => {
   const token = await jwtStrategy(config.directories.service).getBearerToken();
   try {
     const opts = {
@@ -11,6 +11,7 @@ const callDirectoriesApi = async (resource, body, method = 'POST') => {
       uri: `${config.directories.service.url}/${resource}`,
       headers: {
         authorization: `bearer ${token}`,
+        'x-correlation-id': correlationId,
       },
       json: true,
     };
@@ -98,10 +99,15 @@ const markInvitationAsComplete = async (id) => {
   await callDirectoriesApi(`invitations/${id}`, { isCompleted: true }, 'PATCH');
 };
 
+const createUserDevice = async (id, serialNumber, correlationId) => {
+  await callDirectoriesApi(`users/${id}/devices`, { type: 'digipass', serialNumber }, 'POST', correlationId);
+};
+
 module.exports = {
   getById,
   validateOsaCredentials,
   createUser,
   checkIfEmailAlreadyInUse,
   markInvitationAsComplete,
+  createUserDevice,
 };
