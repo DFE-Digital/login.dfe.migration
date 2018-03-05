@@ -15,8 +15,10 @@ const helmet = require('helmet');
 const sanitization = require('login.dfe.sanitization');
 const { getErrorHandler, ejsErrorPages } = require('login.dfe.express-error-handling');
 const setupAppRoutes = require('./app/routes');
+const setCorrelationId = require('express-mw-correlation-id');
 
 const app = express();
+app.use(setCorrelationId(true));
 app.use(helmet({
   noCache: true,
   frameguard: {
