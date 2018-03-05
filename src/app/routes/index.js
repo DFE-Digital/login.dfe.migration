@@ -14,7 +14,9 @@ const healthCheck = require('login.dfe.healthcheck');
 
 const routes = (app, csrf) => {
   app.use('/healthcheck', healthCheck({ config }));
-  if (config.hostingEnvironment.showDevViews === 'true') app.use('/dev', devRoutes(csrf));
+  if (config.hostingEnvironment.useDevViews === true) {
+    app.use('/dev', devRoutes(csrf));
+  }
   app.use('/osa-auth', osaAuth(csrf));
   app.use('/eas-auth', easAuth(csrf));
   app.use('/eas-token', easToken(csrf));

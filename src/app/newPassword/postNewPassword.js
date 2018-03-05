@@ -45,7 +45,7 @@ const handler = async (req, res) => {
     });
   }
   const invitationId = req.session.invitation.id;
-  const serialNumber = req.session.invitation.serialNumber;
+  const serialNumber = req.session.invitation.tokenSerialNumber;
 
   // create a user
   // copy all the org and service links
