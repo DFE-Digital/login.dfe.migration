@@ -2,6 +2,7 @@
 
 const { passwordPolicy } = require('login.dfe.validation');
 const { migrateInvitationToUser } = require('./orchestrations');
+const logger = require('./../../infrastructure/logger');
 
 const validate = (newPassword, confirmPassword) => {
   const messages = {};
@@ -57,6 +58,17 @@ const handler = async (req, res) => {
     id: user.sub,
     email: user.email,
   };
+
+  logger.audit(`User ${user.email}  from invitationid: ${invitationId} created and linked to token "${serialNumber}"`, {
+    type: 'migration',
+    subType: 'user-created',
+    success: true,
+    userId: user.sub,
+    invitationId,
+    userEmail: user.email,
+    deviceSerialNumber: serialNumber,
+  });
+
   // redirect to the complete page
   return res.redirect('/complete');
 };

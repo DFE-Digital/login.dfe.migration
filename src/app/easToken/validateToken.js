@@ -1,4 +1,5 @@
 const { syncDigipassToken } = require('./../../infrastructure/devices');
+const logger = require('./../../infrastructure/logger');
 
 const validate = (code1, code2) => {
   const messages = {
@@ -49,6 +50,15 @@ const action = async (req, res) => {
 
   const syncResult = await syncDigipassToken(invitation.tokenSerialNumber, code1, code2);
   if (!syncResult) {
+    logger.audit(`${invitation.email} (invitationid: ${invitation.id}) failed to resync token "${invitation.tokenSerialNumber}"`, {
+      type: 'migration',
+      subType: 'digipass-resync',
+      success: false,
+      invitationId: invitation.id,
+      userEmail: invitation.email,
+      deviceSerialNumber: invitation.tokenSerialNumber,
+    });
+
     return res.render('easToken/views/easToken', {
       title: 'Enter your Digipass codes',
       csrfToken: req.csrfToken(),
@@ -60,6 +70,15 @@ const action = async (req, res) => {
       },
     });
   }
+
+  logger.audit(`${invitation.email} (invitationid: ${invitation.id}) did a token resync "${invitation.tokenSerialNumber}"`, {
+    type: 'migration',
+    subType: 'digipass-resync',
+    success: true,
+    invitationId: invitation.id,
+    userEmail: invitation.email,
+    deviceSerialNumber: invitation.tokenSerialNumber,
+  });
 
   invitation.tokenSyncd = true;
   req.session.invitation = invitation;
