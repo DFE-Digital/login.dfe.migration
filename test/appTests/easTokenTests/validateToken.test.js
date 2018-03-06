@@ -4,6 +4,12 @@ jest.mock('./../../../src/infrastructure/devices', () => {
   };
 });
 
+jest.mock('./../../../src/infrastructure/logger', () => {
+  return {
+    audit: jest.fn()
+  }
+});
+
 const httpMocks = require('node-mocks-http');
 const validateToken = require('./../../../src/app/easToken/validateToken');
 
