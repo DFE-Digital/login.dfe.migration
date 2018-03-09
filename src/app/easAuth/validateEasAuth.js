@@ -34,6 +34,7 @@ const action = async (req, res) => {
       lastName: invitation.lastName,
       email: invitation.email,
       tokenSerialNumber: invitation.oldCredentials.tokenSerialNumber,
+      source: invitation.oldCredentials.source,
     };
     return res.redirect(`/eas-token/${req.params.id}`);
   }

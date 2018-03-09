@@ -14,7 +14,12 @@ const handler = async (req, res) => {
     message = 'Your KTS permissions have been ported over from the \'Government Gateway sign-in\' to \'DfE sign in\'. If you access other secure DfE services these will be moved over to DfE sign in soon';
   }
 
-  res.render('complete/views/complete', {
+  let view = 'complete';
+  if (req.session.completedInvitation.source === 'support') {
+    view = 'completeSupport';
+  }
+
+  res.render(`complete/views/${view}`, {
     id: req.user.id,
     email: req.user.email,
     destinationUrl,

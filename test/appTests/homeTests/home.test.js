@@ -54,6 +54,28 @@ describe('when rendering a welcome message', () => {
     expect(res._getRenderView()).toBe('home/views/home-eas');
   });
 
+  it('then it should render home/views/home-eas for EAS invitations', async () => {
+    invitations.getById.mockReturnValue({
+      oldCredentials: {
+        source: 'EAS',
+      },
+    });
+
+    await home(req, res);
+
+    expect(res._getRenderView()).toBe('home/views/home-eas');
+  });
+
+  it('then it should redirect to auth for support invitations', async () => {
+    invitations.getById.mockReturnValue({
+      source: 'support',
+    });
+
+    await home(req, res);
+
+    expect(res._getRedirectUrl()).toBe('/enter-code/123-456-789-000');
+  });
+
   it('then it include title and invitation id in model', async () => {
     await home(req, res);
 
