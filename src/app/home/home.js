@@ -17,8 +17,12 @@ const home = async (req, res) => {
     return res.redirect(`/${req.params.id}/email-in-use`);
   }
 
+  if (invitation.source === 'support') {
+    return res.redirect(`/enter-code/${req.params.id}`);
+  }
+
   let viewName = 'home/views/home';
-  if (invitation.oldCredentials.source === 'EAS') {
+  if (invitation.oldCredentials && invitation.oldCredentials.source === 'EAS') {
     viewName = 'home/views/home-eas';
   }
   return res.render(viewName, {
