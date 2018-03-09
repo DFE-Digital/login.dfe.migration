@@ -35,7 +35,8 @@ const action = async (req, res) => {
     lastName: invitation.lastName,
     email: invitation.email,
     tokenSerialNumber: invitation.tokenSerialNumber,
-    tokenSyncd: true
+    tokenSyncd: true,
+    source: invitation.source,
   };
   return res.redirect('../my-details');
 };
