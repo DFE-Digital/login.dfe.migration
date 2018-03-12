@@ -6,6 +6,7 @@ const cookieParser = require('cookie-parser');
 const session = require('cookie-session');
 const expressLayouts = require('express-ejs-layouts');
 const morgan = require('morgan');
+const http = require('http');
 const https = require('https');
 const fs = require('fs');
 const csurf = require('csurf');
@@ -16,6 +17,20 @@ const sanitization = require('login.dfe.sanitization');
 const { getErrorHandler, ejsErrorPages } = require('login.dfe.express-error-handling');
 const setupAppRoutes = require('./app/routes');
 const setCorrelationId = require('express-mw-correlation-id');
+const KeepAliveAgent = require('agentkeepalive');
+
+http.GlobalAgent = new KeepAliveAgent({
+  maxSockets: 10,
+  maxFreeSockets: 2,
+  timeout: 60000,
+  keepAliveTimeout: 300000,
+});
+https.GlobalAgent = new KeepAliveAgent({
+  maxSockets: 10,
+  maxFreeSockets: 2,
+  timeout: 60000,
+  keepAliveTimeout: 300000,
+});
 
 const app = express();
 app.use(setCorrelationId(true));
