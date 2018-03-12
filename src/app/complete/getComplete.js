@@ -10,8 +10,8 @@ const handler = async (req, res) => {
   // if there is a token then is an EAS user
   if (req.session.completedInvitation.tokenSerialNumber) {
     destinationUrl = config.hostingEnvironment.ktsUrl;
-    destinationDescription = 'Go to Key to Success';
-    message = 'Your KTS permissions have been ported over from the \'Government Gateway sign-in\' to \'DfE sign in\'. If you access other secure DfE services these will be moved over to DfE sign in soon';
+    destinationDescription = 'Continue';
+    message = 'You can now use your email, new password and synced token to access Key to Success.';
   }
 
   let view = 'complete';
