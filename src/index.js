@@ -89,6 +89,15 @@ app.use(cookieParser());
 app.use(flash());
 
 
+// Setup global locals for layouts and views
+Object.assign(app.locals, {
+    urls: {
+        interactions: config.hostingEnvironment.interactionsUrl,
+        help: config.hostingEnvironment.helpUrl,
+    },
+    gaTrackingId: config.hostingEnvironment.gaTrackingId,
+});
+
 setupAppRoutes(app, csrf);
 
 const errorPageRenderer = ejsErrorPages.getErrorPageRenderer({
