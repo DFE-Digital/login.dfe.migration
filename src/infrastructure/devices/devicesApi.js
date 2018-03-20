@@ -1,5 +1,8 @@
 const config = require('./../config');
-const rp = require('request-promise');
+const rp = require('request-promise').defaults({
+  forever: true,
+  keepAlive: true,
+});
 const jwtStrategy = require('login.dfe.jwt-strategies');
 const logger = require('./../logger');
 

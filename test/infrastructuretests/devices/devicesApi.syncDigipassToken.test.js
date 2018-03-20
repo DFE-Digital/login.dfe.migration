@@ -22,6 +22,10 @@ jest.mock('login.dfe.jwt-strategies', () => {
   });
 });
 
+const rp = jest.fn();
+const requestPromise = require('request-promise');
+requestPromise.defaults.mockReturnValue(rp);
+
 const { syncDigipassToken } = require('./../../../src/infrastructure/devices/devicesApi');
 
 const serialNumber = '1234509876';
@@ -29,10 +33,8 @@ const code1 = '09183011';
 const code2 = '18270192';
 
 describe('when syncing a digipass token', () => {
-  let rp;
 
   beforeEach(() => {
-    rp = require('request-promise');
     rp.mockReturnValue({ valid: true });
   });
 
