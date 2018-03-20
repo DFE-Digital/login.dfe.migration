@@ -10,12 +10,16 @@ jest.mock('./../../../src/infrastructure/config', () => ({
     },
   },
 }));
+let rp;
+rp = jest.fn();
+const requestPromise = require('request-promise');
+requestPromise.defaults.mockReturnValue(rp);
 
 describe('When using the user invitation service', () => {
   describe('and retrieving invitation information', () => {
     let Directories;
     let getBearerToken;
-    let rp;
+
 
     beforeEach(() => {
       getBearerToken = jest.fn().mockReturnValue('token');
@@ -24,9 +28,7 @@ describe('When using the user invitation service', () => {
         getBearerToken,
       }));
 
-      rp = jest.fn();
-      const requestPromise = require('request-promise');
-      requestPromise.mockImplementation(rp);
+
 
       Directories = require('./../../../src/infrastructure/Invitations/DirectoriesApiInvitations');
     });
@@ -75,7 +77,7 @@ describe('When using the user invitation service', () => {
   describe('and validating invitation information', () => {
     let Directories;
     let getBearerToken;
-    let rp;
+
 
     const id = 'EDC345RFV';
     const username = 'user1';
@@ -88,9 +90,9 @@ describe('When using the user invitation service', () => {
         getBearerToken,
       }));
 
-      rp = jest.fn();
-      const requestPromise = require('request-promise');
-      requestPromise.mockImplementation(rp);
+      // rp = jest.fn();
+      // const requestPromise = require('request-promise');
+      // requestPromise.mockImplementation(rp);
 
       Directories = require('./../../../src/infrastructure/Invitations/DirectoriesApiInvitations');
     });
@@ -204,7 +206,7 @@ describe('When using the user invitation service', () => {
   describe('and creating the device link', () => {
     let Directories;
     let getBearerToken;
-    let rp;
+
     const userId = '123abc456';
     const serialNumber = '986TGB123';
     const correlationId = 'my-id-123';
@@ -216,9 +218,7 @@ describe('When using the user invitation service', () => {
         getBearerToken,
       }));
 
-      rp = jest.fn();
-      const requestPromise = require('request-promise');
-      requestPromise.mockImplementation(rp);
+
 
       Directories = require('./../../../src/infrastructure/Invitations/DirectoriesApiInvitations');
     });

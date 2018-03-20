@@ -16,6 +16,11 @@ jest.mock('./../../../src/infrastructure/config', () => {
   };
 });
 
+
+const rp = jest.fn();
+const requestPromise = require('request-promise');
+requestPromise.defaults.mockReturnValue(rp);
+
 const services = [{
   invitationId: '8226a3d1-823a-4e52-83b3-6e6a117cef0f',
   role: {
@@ -35,10 +40,8 @@ const services = [{
 const { getServicesForInvitation } = require('./../../../src/infrastructure/organisations/organisationsApi');
 
 describe('when getting invitation service mapping from api', () => {
-  let rp;
 
   beforeEach(() => {
-    rp = require('request-promise');
     rp.mockImplementation(() => {
       return services;
     });
