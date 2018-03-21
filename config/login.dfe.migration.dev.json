@@ -20,7 +20,13 @@
     "sessionSecret": "your-magnate-muffler-sonic",
     "sessionCookieExpiryInMinutes": 30,
     "portalUrl": "https://localhost:4101",
-    "ktsUrl": "http://kts.test"
+    "ktsUrl": "http://kts.test",
+    "agentKeepAlive" : {
+      "maxSockets":160,
+      "maxFreeSockets":10,
+      "timeout":60000,
+      "keepAliveTimeout":30000
+    }
   },
   "directories": {
     "type": "static",
