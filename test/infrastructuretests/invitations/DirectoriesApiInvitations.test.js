@@ -9,6 +9,10 @@ jest.mock('./../../../src/infrastructure/config', () => ({
       url: 'http://unit.test.local',
     },
   },
+  hostingEnvironment: {
+    agentKeepAlive: {
+    },
+  },
 }));
 let rp;
 rp = jest.fn();

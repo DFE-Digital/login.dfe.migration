@@ -7,6 +7,10 @@ jest.mock('./../../../src/infrastructure/config', () => {
         url: 'https://device.login.dfe.test',
       },
     },
+    hostingEnvironment: {
+      agentKeepAlive: {
+      },
+    },
   };
 });
 jest.mock('./../../../src/infrastructure/logger', () => {
