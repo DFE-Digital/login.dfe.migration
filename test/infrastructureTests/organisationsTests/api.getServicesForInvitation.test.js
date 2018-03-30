@@ -13,6 +13,10 @@ jest.mock('./../../../src/infrastructure/config', () => {
         url: 'https://orgs.test',
       },
     },
+    hostingEnvironment: {
+      agentKeepAlive: {
+      },
+    },
   };
 });
 
