@@ -28,7 +28,7 @@ const routes = (app, csrf) => {
   // app.use('/', migrationHome(csrf));
 
   app.get('/:id', (req, res) => {
-    res.redirect(`${config.hostingEnvironment.profilesUrl}/register/${req.params.id}`);
+    res.redirect(`${config.hostingEnvironment.profileUrl}/register/${req.params.id}`);
   });
 };
 
