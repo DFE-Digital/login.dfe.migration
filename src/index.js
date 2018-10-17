@@ -52,9 +52,9 @@ const csrf = csurf({
   },
 });
 
-const { migrationSchema, validateConfigAndQuitOnError } = require('login.dfe.config.schema');
+const { migrationSchema, validateConfig } = require('login.dfe.config.schema');
 
-validateConfigAndQuitOnError(migrationSchema, config, logger);
+validateConfig(migrationSchema, config, logger, config.hostingEnvironment.env !== 'dev');
 
 
 app.use(bodyParser.urlencoded({ extended: true }));
